@@ -1,245 +1,759 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Биологический сортировщик: Виды метаболизма — BIO-AI SYNAPSE</title>
-<style>
-body{
-margin:0;
-font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-background:linear-gradient(135deg,#07121f,#0b2235);
-color:#fff;
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
-}
-#game{
-width:950px;
-background:#0f1f33;
-border:2px solid #2dd4bf;
-border-radius:24px;
-padding:30px;
-box-shadow:0 0 35px rgba(45,212,191,.25);
-}
-h1{
-text-align:center;
-color:#7cf5c8;
-text-shadow:0 0 15px rgba(56,240,176,.4);
-margin-top:0;
-font-size: 26px;
-}
-p.subtitle{
-text-align:center;
-color:#a5f3fc;
-margin-bottom:25px;
-font-size: 15px;
-}
-#score-board{
-display:flex;
-justify-content:space-between;
-background:#10243d;
-padding:12px 20px;
-border-radius:12px;
-margin-bottom:20px;
-font-weight:bold;
-font-size: 16px;
-border:1px solid #1e3a5f;
-}
-#card-container{
-background:#162f4c;
-border:2px dashed #315b8a;
-border-radius:18px;
-padding:35px;
-text-align:center;
-font-size:22px;
-margin-bottom:25px;
-min-height:70px;
-display:flex;
-align-items:center;
-justify-content:center;
-color:#fff;
-box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
-}
-#bins{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-}
-.bin{
-background:#10243d;
-border:2px solid #2dd4bf;
-border-radius:16px;
-padding:25px;
-text-align:center;
-cursor:pointer;
-transition:0.3s;
-box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-.bin:hover{
-background:#1e3a5f;
-transform:translateY(-3px);
-box-shadow: 0 8px 20px rgba(45,212,191,.3);
-}
-.bin h3{
-color:#7cf5c8;
-margin-top:0;
-font-size:20px;
-margin-bottom:10px;
-}
-.bin p{
-font-size:13px;
-color:#94a3b8;
-margin:0;
-line-height: 1.4;
-}
-#message{
-margin-top:20px;
-font-size:18px;
-text-align:center;
-min-height:24px;
-font-weight:bold;
-}
-.success{
-color:#7cf5c8;
-}
-.error{
-color:#fca5a5;
-}
-#restartScreen{
-display:none;
-text-align:center;
-padding:20px;
-}
-button{
-margin-top:20px;
-padding:12px 28px;
-border:none;
-border-radius:12px;
-background:#2dd4bf;
-color:#05222b;
-font-weight:bold;
-cursor:pointer;
-font-size:16px;
-transition: 0.2s;
-box-shadow: 0 0 15px rgba(45,212,191,.4);
-}
-button:hover{
-background:#38f0b0;
-transform: scale(1.05);
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Архитектор времени: МИТОЗ [Light Cyber]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f6fa;
+            --panel-bg: rgba(255, 255, 255, 0.85);
+            --text-color: #1a1a2e;
+            --neon-blue: #0088cc;
+            --neon-purple: #7b1fa2;
+            --neon-pink: #d81b60;
+            --neon-red: #d32f2f;
+            --neon-green: #2e7d32;
+            --border-glow: 0 0 15px rgba(0, 136, 204, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Светлый киберпанк-фон с сеткой */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 136, 204, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 136, 204, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        /* Светлые неоновые акценты */
+        .cyber-grid-glow {
+            position: fixed;
+            bottom: -50px; left: 0; width: 100%; height: 300px;
+            background: linear-gradient(to top, rgba(123, 31, 162, 0.08), transparent);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        header {
+            background: var(--panel-bg);
+            border-bottom: 2px solid var(--neon-blue);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--border-glow);
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+
+        header h1 {
+            font-size: 22px;
+            letter-spacing: 2px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px rgba(0, 136, 204, 0.2);
+        }
+
+        .hud-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+        }
+
+        .stat-badge {
+            background: rgba(0, 136, 204, 0.08);
+            border: 1px solid var(--neon-blue);
+            padding: 5px 12px;
+            border-radius: 4px;
+            box-shadow: 0 0 8px rgba(0, 136, 204, 0.15);
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            gap: 25px;
+            z-index: 5;
+        }
+
+        /* Шоссе времени в стиле Tron (светлое) */
+        .highway-container {
+            background: var(--panel-bg);
+            border: 2px solid var(--neon-purple);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(123, 31, 162, 0.15);
+            position: relative;
+            overflow-x: auto;
+            backdrop-filter: blur(5px);
+        }
+
+        .highway-title {
+            font-size: 13px;
+            color: var(--neon-purple);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .highway-slots {
+            display: flex;
+            gap: 15px;
+            min-width: 1200px;
+            padding-bottom: 10px;
+        }
+
+        .slot {
+            flex: 1;
+            min-height: 140px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px dashed rgba(0, 136, 204, 0.5);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .slot::before {
+            content: attr(data-index);
+            position: absolute;
+            top: 5px; left: 8px;
+            font-size: 10px;
+            color: rgba(26, 26, 46, 0.4);
+        }
+
+        .slot.drag-over {
+            border-color: var(--neon-green);
+            background: rgba(46, 125, 50, 0.08);
+            box-shadow: 0 0 15px var(--neon-green);
+        }
+
+        .slot.filled {
+            border-style: solid;
+            border-color: var(--neon-blue);
+            background: rgba(0, 136, 204, 0.06);
+            box-shadow: 0 0 10px rgba(0, 136, 204, 0.2);
+        }
+
+        /* Пул событий внизу */
+        .pool-container {
+            background: var(--panel-bg);
+            border: 2px solid var(--neon-pink);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(216, 27, 96, 0.15);
+            backdrop-filter: blur(5px);
+        }
+
+        .pool-title {
+            font-size: 13px;
+            color: var(--neon-pink);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .events-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            min-height: 90px;
+        }
+
+        .event-card {
+            background: linear-gradient(135deg, rgba(216,27,96,0.08), rgba(123,31,162,0.08));
+            border: 1px solid var(--neon-pink);
+            border-radius: 8px;
+            padding: 12px 18px;
+            cursor: grab;
+            font-size: 12px;
+            max-width: 220px;
+            box-shadow: 0 0 10px rgba(216,27,96,0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px rgba(216,27,96,0.3);
+        }
+
+        .event-card:active {
+            cursor: grabbing;
+        }
+
+        .event-card.dragging {
+            opacity: 0.4;
+        }
+
+        /* Модальные окна и Обоснование */
+        .modal-backdrop {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            display: none;
+        }
+
+        .cyber-modal {
+            background: #ffffff;
+            border: 2px solid var(--neon-blue);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 650px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 136, 204, 0.3);
+            position: relative;
+        }
+
+        .cyber-modal h2 {
+            color: var(--neon-blue);
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .cyber-modal p {
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: rgba(0, 136, 204, 0.04);
+            border: 1px solid var(--neon-blue);
+            color: var(--text-color);
+            padding: 12px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            background: rgba(0, 136, 204, 0.12);
+            box-shadow: 0 0 10px rgba(0, 136, 204, 0.2);
+        }
+
+        /* Глитч-эффекты и ошибки в матрице */
+        @keyframes glitch-anim {
+            0% { transform: translate(0) }
+            20% { transform: translate(-3px, 3px); filter: hue-rotate(90deg); }
+            40% { transform: translate(-3px, -3px); filter: invert(0.1); }
+            60% { transform: translate(3px, 3px); filter: hue-rotate(-90deg); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0) }
+        }
+
+        .glitch-active {
+            animation: glitch-anim 0.2s infinite;
+        }
+
+        .highway-container.paradox-flash {
+            border-color: var(--neon-red);
+            box-shadow: 0 0 30px rgba(211, 47, 47, 0.4);
+            animation: glitch-anim 0.3s ease;
+        }
+
+        /* Предупреждение о парадоксе */
+        .paradox-toast {
+            position: fixed;
+            top: 20px; left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: rgba(211, 47, 47, 0.95);
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 0 20px rgba(211, 47, 47, 0.5);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .paradox-toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .audio-toggle {
+            background: transparent;
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            transition: all 0.2s;
+        }
+
+        .audio-toggle:hover {
+            background: rgba(0, 136, 204, 0.1);
+        }
+
+        /* Финальный экран цикла */
+        .loop-animation-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(244, 246, 250, 0.96);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loop-animation-screen h2 {
+            font-size: 28px;
+            color: var(--neon-green);
+            text-shadow: 0 0 10px rgba(46, 125, 50, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .timeline-summary {
+            display: flex;
+            gap: 10px;
+            max-width: 1100px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .summary-item {
+            background: rgba(0, 136, 204, 0.06);
+            border: 1px solid var(--neon-blue);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            width: 190px;
+        }
+
+        .cyber-btn {
+            background: transparent;
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 12px 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(46, 125, 50, 0.2);
+            transition: all 0.2s;
+        }
+
+        .cyber-btn:hover {
+            background: rgba(46, 125, 50, 0.1);
+            box-shadow: 0 0 25px rgba(46, 125, 50, 0.3);
+        }
+    </style>
 </head>
 <body>
 
-<div id="game">
+    <div class="cyber-grid-glow"></div>
 
-<h1>Интерактивный тренажер: Виды метаболизма</h1>
-<p class="subtitle">Распределите процессы и вещества по двум направлениям обмена веществ (катаболизм и анаболизм).</p>
+    <header>
+        <h1>АРХИТЕКТОР ВРЕМЕНИ: МИТОЗ</h1>
+        <div class="hud-stats">
+            <div class="stat-badge">СТАБИЛЬНОСТЬ: <span id="stability-val">100</span>%</div>
+            <div class="stat-badge">СЛОТЫ: <span id="slots-count">0</span>/10</div>
+            <button class="audio-toggle" id="audio-btn" onclick="toggleAudio()">СИНТЕЗАТОР ЗВУКА: ВЫКЛ</button>
+        </div>
+    </header>
 
-<div id="score-board">
-<div>Счет: <span id="score">0</span> / 8</div>
-<div>Осталось: <span id="timeLeft">8</span></div>
-</div>
+    <div class="main-container" id="main-container">
+        <!-- Шоссе времени -->
+        <div class="highway-container" id="highway-box">
+            <div class="highway-title">Кронологическая магистраль клеточного деления (Интерфаза ➔ Митоз ➔ Цитокинез)</div>
+            <div class="highway-slots" id="highway-slots">
+                <!-- Слоты с 1 по 10 генерируются JS -->
+            </div>
+        </div>
 
-<div id="gameArea">
-<div id="card-container">Загрузка процесса...</div>
+        <!-- Пул событий -->
+        <div class="pool-container">
+            <div class="pool-title">Пул неразмещенных хроно-событий</div>
+            <div class="events-pool" id="events-pool">
+                <!-- Карточки событий в случайном порядке -->
+            </div>
+        </div>
+    </div>
 
-<div id="bins">
-<div class="bin" onclick="selectBin('catabolism')">
-<h3>Катаболизм (Энергетический обмен)</h3>
-<p>Распад сложных веществ, выделение энергии и АТФ</p>
-</div>
-<div class="bin" onclick="selectBin('anabolism')">
-<h3>Анаболизм (Plastic / Пластический обмен)</h3>
-<p>Синтез сложных веществ, затраты энергии и АТФ</p>
-</div>
-</div>
-</div>
+    <!-- Модальное окно обоснования -->
+    <div class="modal-backdrop" id="validation-modal">
+        <div class="cyber-modal">
+            <h2>АНАЛИЗ ХРОНО-ПОЗИЦИИ</h2>
+            <p id="modal-event-desc">Событие...</p>
+            <p style="color: var(--neon-blue); font-size: 12px; margin-bottom: 10px;">Точно ли это здесь? Выберите научное обоснование:</p>
+            <div class="options-list" id="modal-options">
+                <!-- Варианты ответов -->
+            </div>
+        </div>
+    </div>
 
-<div id="restartScreen">
-<h2 style="color:#7cf5c8">Тренировка завершена!</h2>
-<p id="finalMessage" style="font-size: 18px; margin: 15px 0;"></p>
-<button onclick="restartGame()">Пройти еще раз</button>
-</div>
+    <!-- Тост предупреждения о парадоксе -->
+    <div class="paradox-toast" id="paradox-toast">
+        ⚠️ ВНИМАНИЕ: ХРОНОПАРАДОКС! Событие отброшено в пул.
+    </div>
 
-<div id="message"></div>
+    <!-- Финальный экран петли времени -->
+    <div class="loop-animation-screen" id="victory-screen">
+        <h2>🌀 ВРЕМЕННАЯ ПЕТЛЯ УСПЕШНО ЗАМКНУТА!</h2>
+        <p style="margin-bottom: 25px; font-size: 14px;">Вы воссоздали полную хронологию митоза и спасли клеточную матрицу от распада.</p>
+        <div class="timeline-summary" id="timeline-summary">
+            <!-- Итоговая хронология -->
+        </div>
+        <button class="cyber-btn" onclick="restartGame()">ПЕРЕЗАПУСК ЦИКЛА</button>
+    </div>
 
-</div>
+    <script>
+        // База данных 10 событий митоза в строгом хронологическом порядке
+        const MITOSIS_EVENTS = [
+            { id: 1, text: "G1-период: Активный рост клетки, синтез белка и увеличение пула органелл", phase: "Интерфаза" },
+            { id: 2, text: "S-период: Репликация ДНК и удвоение хромосом (2n4c)", phase: "Интерфаза" },
+            { id: 3, text: "G2-период: Синтез белков веретена деления и проверка генома", phase: "Интерфаза" },
+            { id: 4, text: "Профаза: Спирализация хромосом, расхождение центриолей и разрушение ядрышка", phase: "Митоз" },
+            { id: 5, text: "Прометафаза: Растворение ядерной оболочки и прикрепление нитей веретена к кинетохорам", phase: "Митоз" },
+            { id: 6, text: "Метафаза: Выстраивание хромосом по экваториальному экватору клетки (метафазная пластинка)", phase: "Митоз" },
+            { id: 7, text: "Анафаза: Разделение сестринских хроматид и их движение к полюсам клетки", phase: "Митоз" },
+            { id: 8, text: "Телофаза: Деспирализация хромосом, формирование новых ядерных оболочек", phase: "Митоз" },
+            { id: 9, text: "Цитокинез: Деление цитоплазмы и образование перетяжки (или клеточной пластинки)", phase: "Цитокинез" },
+            { id: 10, text: "Образование двух дочерних клеток с идентичным диплоидным набором (2n2c)", phase: "Результат" }
+        ];
 
-<script>
-const items = [
-{ text: "Расщепление глюкозы до пирувата (гликолиз)", type: "catabolism" },
-{ text: "Фотосинтез (синтез глюкозы из CO₂ и H₂O)", type: "anabolism" },
-{ text: "Биосинтез белка на рибосомах из аминокислот", type: "anabolism" },
-{ text: "Окисление жирных кислот в митохондриях", type: "catabolism" },
-{ text: "Репликация ДНК (удвоение молекулы)", type: "anabolism" },
-{ text: "Дыхательный цикл Кребса", type: "catabolism" },
-{ text: "Синтез гликогена из избытка глюкозы в печени", type: "anabolism" },
-{ text: "Гидролиз белков пищи в желудочно-кишечном тракте", type: "catabolism" }
-];
+        // Обоснования (по одному верному и два ложных на каждое событие для проверки)
+        const JUSTIFICATIONS = {
+            1: {
+                correct: "Клетка только что завершила деление, ей нужно восстановить объем, накопить АТФ и синтезировать белки до начала копирования ДНК.",
+                false1: "На этом этапе происходит мгновенное разделение ДНК на две равные части без подготовки.",
+                false2: "Хромосомы уже полностью упакованы и выстроены по экватору для разделения."
+            },
+            2: {
+                correct: "Молекула ДНК удваивается по полуконсервативному принципу, чтобы каждая дочерняя клетка получила копию.",
+                false1: "Синтезируются исключительно липиды плазматической мембраны без участия нуклеиновых кислот.",
+                false2: "Происходит разрушение ядерной оболочки и конденсация хроматина в палочковидные структуры."
+            },
+            3: {
+                correct: "Клетка накапливает тубулин для будущих микротрубочек веретена деления и проходит контроль белка p53.",
+                false1: "Это стадия покоя (G0), в которой клетка прекращает любые метаболические процессы.",
+                false2: "Происходит расхождение хроматид к противоположным полюсам под действием моторных белков."
+            },
+            4: {
+                correct: "Хромосомы компактизируются до видимых структур, центриоли мигрируют к полюсам, ядрышко исчезает.",
+                false1: "Нити ДНК максимально расплетаются для активного транскрипционного синтеза белка.",
+                false2: "Дочерние клетки полностью расходятся в разные стороны с образованием перегородки."
+            },
+            5: {
+                correct: "Ядерная мембрана распадается на везикулы, открывая доступ нитям веретена к центромерам хромосом.",
+                false1: "Хромосомы выстраиваются в четкую линию строго по экватору без участия микротрубочек.",
+                false2: "Завершается цитокинез и восстанавливается исходный объем цитоплазмы."
+            },
+            6: {
+                correct: "Хромосомы достигают максимальной степени спирализации и выстраиваются в экваториальной плоскости.",
+                false1: "Сестринские хроматиды стремительно движутся к противоположным полюсам клетки.",
+                false2: "Происходит удвоение молекулы ДНК перед началом клеточного цикла."
+            },
+            7: {
+                correct: "Нити веретена укорачиваются, разрывая центромеры и растаскивая сестринские хроматиды к полюсам.",
+                false1: "Ядерная оболочка заново формируется вокруг разошедшихся хромосом.",
+                false2: "Клетка активно поглощает питательные вещества из внешней среды для роста в G1-периоде."
+            },
+            8: {
+                correct: "Хромосомы деспирализуются, вокруг каждого набора формируется новая ядерная оболочка, возвращается ядрышко.",
+                false1: "Происходит репликация всех клеточных органелл и синтез молекул АТФ.",
+                false2: "Хромосомы выстраиваются по экватору клетки под контролем кинетохоров."
+            },
+            9: {
+                correct: "У животных клеток образуется сократительное кольцо из актина и миозина, разделяющее цитоплазму.",
+                false1: "Хромосомы удваиваются в объеме за счет активного входа ионов кальция в ядро.",
+                false2: "Центриоли расходятся к полюсам и формируют аппарат Гольджи."
+            },
+            10: {
+                correct: "Завершение митотического цикла приводит к появлению двух генетически идентичных дочерних клеток.",
+                false1: "Образуется четыре гаплоидные клетки с половинным набором хромосом (мейоз).",
+                false2: "Клетка переходит в фазу длительного покоя без возможности последующего деления."
+            }
+        };
 
-let currentIndex = 0;
-let score = 0;
-let shuffledItems = [];
+        let gameState = {
+            slots: Array(10).fill(null),
+            poolEvents: [],
+            stability: 100,
+            currentActiveSlot: null,
+            currentDraggedEventId: null
+        };
 
-function startGame() {
-shuffledItems = [...items].sort(() => Math.random() - 0.5);
-currentIndex = 0;
-score = 0;
-document.getElementById('score').textContent = score;
-document.getElementById('timeLeft').textContent = shuffledItems.length;
-document.getElementById('gameArea').style.display = 'block';
-document.getElementById('restartScreen').style.display = 'none';
-document.getElementById('message').textContent = '';
-showCard();
-}
+        function initGame() {
+            gameState.slots = Array(10).fill(null);
+            gameState.stability = 100;
+            updateHUD();
 
-function showCard() {
-if (currentIndex < shuffledItems.length) {
-document.getElementById('card-container').textContent = shuffledItems[currentIndex].text;
-document.getElementById('timeLeft').textContent = shuffledItems.length - currentIndex;
-} else {
-endGame();
-}
-}
+            gameState.poolEvents = [...MITOSIS_EVENTS].sort(() => Math.random() - 0.5);
 
-function selectBin(selectedType) {
-const currentItem = shuffledItems[currentIndex];
-const message = document.getElementById('message');
+            renderSlots();
+            renderPool();
+            startMatrixGlitchEngine();
+        }
 
-if (currentItem.type === selectedType) {
-score++;
-document.getElementById('score').textContent = score;
-message.className = 'success';
-message.textContent = 'Верно! Отличная биологическая интуиция.';
-} else {
-message.className = 'error';
-message.textContent = 'Ошибка! Проверьте, к какому типу обмена относится процесс.';
-}
+        function updateHUD() {
+            document.getElementById('stability-val').innerText = gameState.stability;
+            const filledCount = gameState.slots.filter(s => s !== null).length;
+            document.getElementById('slots-count').innerText = filledCount;
+        }
 
-currentIndex++;
-setTimeout(() => {
-message.textContent = '';
-showCard();
-}, 900);
-}
+        function renderSlots() {
+            const container = document.getElementById('highway-slots');
+            container.innerHTML = '';
 
-function endGame() {
-document.getElementById('gameArea').style.display = 'none';
-document.getElementById('restartScreen').style.display = 'block';
-const finalMsg = document.getElementById('finalMessage');
-if (score === items.length) {
-finalMsg.innerHTML = `Потрясающий результат! Вы безупречно разделили катаболизм и анаболизм (<span style="color:#7cf5c8">${score}/${items.length}</span>).`;
-} else {
-finalMsg.innerHTML = `Вы завершили тренировку с результатом <span style="color:#7cf5c8">${score} из ${items.length}</span>. Попробуйте еще раз для закрепления материала!`;
-}
-}
+            gameState.slots.forEach((eventObj, index) => {
+                const slot = document.createElement('div');
+                slot.className = `slot ${eventObj ? 'filled' : ''}`;
+                slot.setAttribute('data-index', `Слот 0${index + 1}`);
 
-// Запуск игры при загрузке
-startGame();
-</script>
+                if (eventObj) {
+                    slot.innerHTML = `<span style="font-size: 11px; color: var(--neon-blue); font-weight: 700;">${eventObj.phase}</span><span style="font-size: 11px; margin-top:5px;">${eventObj.text}</span>`;
+                } else {
+                    slot.innerHTML = `<span style="font-size: 11px; color: rgba(26, 26, 46, 0.4);">Перетащите событие</span>`;
+                }
 
+                slot.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    slot.classList.add('drag-over');
+                });
+                slot.addEventListener('dragleave', () => {
+                    slot.classList.remove('drag-over');
+                });
+                slot.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    slot.classList.remove('drag-over');
+                    if (gameState.slots[index] === null && gameState.currentDraggedEventId !== null) {
+                        tryPlaceEvent(index, gameState.currentDraggedEventId);
+                    }
+                });
+
+                container.appendChild(slot);
+            });
+        }
+
+        function renderPool() {
+            const container = document.getElementById('events-pool');
+            container.innerHTML = '';
+
+            gameState.poolEvents.forEach((eventObj) => {
+                const card = document.createElement('div');
+                card.className = 'event-card';
+                card.draggable = true;
+                card.innerText = eventObj.text;
+
+                card.addEventListener('dragstart', () => {
+                    gameState.currentDraggedEventId = eventObj.id;
+                    card.classList.add('dragging');
+                });
+                card.addEventListener('dragend', () => {
+                    gameState.currentDraggedEventId = null;
+                    card.classList.remove('dragging');
+                });
+
+                container.appendChild(card);
+            });
+        }
+
+        function tryPlaceEvent(slotIndex, eventId) {
+            const eventObj = MITOSIS_EVENTS.find(e => e.id === eventId);
+            gameState.currentActiveSlot = slotIndex;
+            showValidationModal(eventObj, slotIndex);
+        }
+
+        function showValidationModal(eventObj, slotIndex) {
+            const modal = document.getElementById('validation-modal');
+            document.getElementById('modal-event-desc').innerText = `Событие: "${eventObj.text}"`;
+
+            const optionsContainer = document.getElementById('modal-options');
+            optionsContainer.innerHTML = '';
+
+            const justification = JUSTIFICATIONS[eventObj.id];
+            
+            let options = [
+                { text: justification.correct, correct: true },
+                { text: justification.false1, correct: false },
+                { text: justification.false2, correct: false }
+            ].sort(() => Math.random() - 0.5);
+
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt.text;
+                btn.onclick = () => handleValidationAnswer(opt.correct, eventObj, slotIndex);
+                optionsContainer.appendChild(btn);
+            });
+
+            modal.style.display = 'flex';
+        }
+
+        function handleValidationAnswer(isCorrect, eventObj, slotIndex) {
+            const modal = document.getElementById('validation-modal');
+            modal.style.display = 'none';
+
+            const isRightSlot = (slotIndex === eventObj.id - 1);
+
+            if (isCorrect && isRightSlot) {
+                gameState.slots[slotIndex] = eventObj;
+                gameState.poolEvents = gameState.poolEvents.filter(e => e.id !== eventObj.id);
+                playAudioTone(587.33, 0.2);
+
+                renderSlots();
+                renderPool();
+                updateHUD();
+
+                checkGameCompletion();
+            } else {
+                triggerParadox();
+            }
+        }
+
+        function triggerParadox() {
+            gameState.stability = Math.max(0, gameState.stability - 15);
+            updateHUD();
+
+            const highwayBox = document.getElementById('highway-box');
+            highwayBox.classList.add('paradox-flash');
+            setTimeout(() => {
+                highwayBox.classList.remove('paradox-flash');
+            }, 300);
+
+            const toast = document.getElementById('paradox-toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+
+            playAudioTone(150, 0.4);
+        }
+
+        function checkGameCompletion() {
+            const filledCount = gameState.slots.filter(s => s !== null).length;
+            if (filledCount === 10) {
+                setTimeout(() => {
+                    showVictoryScreen();
+                }, 500);
+            }
+        }
+
+        function showVictoryScreen() {
+            const screen = document.getElementById('victory-screen');
+            const summaryContainer = document.getElementById('timeline-summary');
+            summaryContainer.innerHTML = '';
+
+            gameState.slots.forEach((ev, i) => {
+                const item = document.createElement('div');
+                item.className = 'summary-item';
+                item.innerHTML = `<strong>0${i+1}. ${ev.phase}</strong><br>${ev.text.substring(0, 45)}...`;
+                summaryContainer.appendChild(item);
+            });
+
+            screen.style.display = 'flex';
+            playAudioTone(880, 0.6);
+        }
+
+        function restartGame() {
+            document.getElementById('victory-screen').style.display = 'none';
+            initGame();
+        }
+
+        function startMatrixGlitchEngine() {
+            setInterval(() => {
+                if (Math.random() > 0.4) {
+                    const container = document.getElementById('main-container');
+                    container.classList.add('glitch-active');
+                    setTimeout(() => {
+                        container.classList.remove('glitch-active');
+                    }, 2000);
+                }
+            }, 14000);
+        }
+
+        let audioCtx = null;
+        let isAudioEnabled = false;
+
+        function toggleAudio() {
+            isAudioEnabled = !isAudioEnabled;
+            const btn = document.getElementById('audio-btn');
+            if (isAudioEnabled) {
+                btn.innerText = "СИНТЕЗАТОР ЗВУКА: ВКЛ";
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+            } else {
+                btn.innerText = "СИНТЕЗАТОР ЗВУКА: ВЫКЛ";
+            }
+        }
+
+        function playAudioTone(freq, duration) {
+            if (!isAudioEnabled || !audioCtx) return;
+            try {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        window.onload = () => {
+            initGame();
+        };
+    </script>
 </body>
 </html>
