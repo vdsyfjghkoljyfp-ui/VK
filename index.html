@@ -3,873 +3,747 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Детективное расследование — Интерфаза</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+<title>PHOTOSYNTHESIS — Энергия Солнца</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800&display=swap');
+
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 :root {
-    --ink: #263238;
-    --paper: #fffdf7;
-    --paper2: #f4eee3;
-    --brown: #765548;
-    --brown-dark: #4d372f;
-    --green: #66856f;
-    --green-dark: #476252;
-    --gold: #c59b54;
-    --red: #b95757;
-    --blue: #668ba5;
-    --shadow: 0 12px 35px rgba(58, 43, 34, .18);
-}
-
-html,
-body {
-    margin: 0;
-    min-height: 100%;
+    --green: #52ff9a;
+    --green2: #00d878;
+    --cyan: #35eaff;
+    --yellow: #ffe45c;
+    --purple: #a56cff;
+    --red: #ff5577;
+    --bg: #06100d;
+    --panel: rgba(8, 27, 21, .88);
 }
 
 body {
-    font-family: "Amatic SC", cursive;
-    font-weight: 700;
-    color: var(--ink);
-    background:
-        linear-gradient(
-            rgba(237, 230, 216, .83),
-            rgba(224, 232, 220, .88)
-        ),
-        url("https://avatars.mds.yandex.net/i?id=36a42dd2d73625451acc6104b18afc38_l-5382665-images-thumbs&n=13")
-        center / cover fixed no-repeat;
-    overflow-x: hidden;
-}
-
-button,
-input {
-    font-family: inherit;
-    font-weight: 700;
-}
-
-button {
-    cursor: pointer;
-}
-
-.app {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    overflow-x: hidden;
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(30,255,130,.12), transparent 25%),
+        radial-gradient(circle at 85% 10%, rgba(30,220,255,.1), transparent 25%),
+        linear-gradient(135deg, #020806, #071b13 50%, #03100c);
 }
 
-/* ================= HEADER ================= */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(82,255,154,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(82,255,154,.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+/* HEADER */
 
 header {
-    height: 76px;
+    height: 82px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
-    padding: 10px 28px;
-    background: rgba(255, 252, 244, .92);
-    border-bottom: 2px solid rgba(118, 85, 72, .18);
-    box-shadow: 0 5px 20px rgba(50, 40, 30, .1);
+    padding: 0 35px;
+    border-bottom: 1px solid rgba(82,255,154,.2);
+    background: rgba(2,12,9,.85);
+    backdrop-filter: blur(12px);
     position: relative;
-    z-index: 20;
+    z-index: 5;
 }
 
 .logo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
 }
 
 .logo-icon {
     width: 48px;
     height: 48px;
-    border-radius: 14px;
-    display: grid;
-    place-items: center;
-    font-size: 32px;
-    background: #e7d8c1;
-    box-shadow: inset 0 0 0 2px rgba(118,85,72,.15);
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff6a0 5%, #ffe04e 30%, #ff9f00 70%, transparent 72%);
+    box-shadow: 0 0 25px #ffd83d;
+    animation: sunPulse 2s infinite;
 }
 
-.logo h1 {
-    margin: 0;
-    font-size: 32px;
-    line-height: .9;
-    color: var(--brown-dark);
+.logo-text {
+    font-family: Orbitron, sans-serif;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: 2px;
 }
 
-.logo small {
-    display: block;
-    font-size: 17px;
-    color: #788077;
-    margin-top: 4px;
+.logo-text span {
+    color: var(--green);
 }
 
-.header-right {
+.stats {
     display: flex;
-    align-items: center;
-    gap: 14px;
+    gap: 12px;
 }
 
-.progress-box {
-    min-width: 190px;
+.stat {
+    min-width: 125px;
+    padding: 9px 15px;
+    border: 1px solid rgba(82,255,154,.22);
+    background: rgba(10,30,23,.8);
+    border-radius: 12px;
 }
 
-.progress-label {
+.stat small {
+    display: block;
+    color: #7fa997;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat strong {
+    display: block;
+    margin-top: 2px;
+    font-family: Orbitron;
+    color: var(--green);
+}
+
+/* MAIN */
+
+main {
+    max-width: 1450px;
+    margin: auto;
+    padding: 25px;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.title h1 {
+    font-family: Orbitron;
+    font-size: clamp(28px, 4vw, 48px);
+    letter-spacing: 5px;
+    color: #eafff3;
+    text-shadow:
+        0 0 10px rgba(82,255,154,.6),
+        0 0 30px rgba(82,255,154,.2);
+}
+
+.title p {
+    color: #82ad9b;
+    margin-top: 7px;
+    font-size: 14px;
+}
+
+/* GAME AREA */
+
+.game {
+    display: grid;
+    grid-template-columns: 250px 1fr 280px;
+    gap: 18px;
+}
+
+/* PANELS */
+
+.panel {
+    background: var(--panel);
+    border: 1px solid rgba(82,255,154,.2);
+    border-radius: 20px;
+    box-shadow:
+        inset 0 0 30px rgba(0,255,130,.025),
+        0 10px 35px rgba(0,0,0,.25);
+    backdrop-filter: blur(10px);
+}
+
+.panel-title {
+    font-family: Orbitron;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: var(--green);
+    padding: 18px 18px 10px;
+}
+
+/* LEFT */
+
+.left {
+    padding-bottom: 18px;
+}
+
+.resource {
+    margin: 12px;
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.025);
+    border: 1px solid rgba(255,255,255,.05);
+}
+
+.resource-top {
     display: flex;
     justify-content: space-between;
-    font-size: 17px;
-    color: #67574f;
+    align-items: center;
 }
 
-.progress {
-    height: 10px;
-    background: #e1dbcf;
+.resource-name {
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.resource-value {
+    font-family: Orbitron;
+    color: var(--cyan);
+}
+
+.bar {
+    height: 8px;
+    background: #07110e;
     border-radius: 20px;
     overflow: hidden;
+    margin-top: 10px;
 }
 
-.progress-fill {
+.bar-fill {
     height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, var(--green), var(--gold));
+    width: 50%;
     border-radius: inherit;
-    transition: width .5s ease;
+    transition: width .3s;
+    background: linear-gradient(90deg, var(--green2), var(--cyan));
+    box-shadow: 0 0 12px var(--green);
 }
 
-.reset-btn {
-    border: 0;
-    border-radius: 12px;
-    padding: 10px 17px;
-    font-size: 19px;
-    background: #e8ddd0;
-    color: var(--brown-dark);
-    box-shadow: 0 4px 10px rgba(80,50,30,.1);
-    transition: .2s;
+.resource-icon {
+    font-size: 22px;
+    margin-right: 6px;
 }
 
-.reset-btn:hover {
-    transform: translateY(-2px);
-    background: #ddcfbf;
-}
+/* CENTER */
 
-/* ================= MAIN ================= */
-
-.main {
-    flex: 1;
-    width: min(1450px, 96%);
-    margin: 20px auto 30px;
-    display: flex;
-    gap: 20px;
-    align-items: stretch;
-}
-
-.scene-card {
-    flex: 1;
-    min-width: 0;
-    background: rgba(255, 253, 247, .9);
-    border: 1px solid rgba(118,85,72,.18);
-    border-radius: 24px;
-    box-shadow: var(--shadow);
-    padding: 18px;
+.center {
+    min-height: 620px;
     position: relative;
     overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 50%, rgba(50,255,150,.08), transparent 40%),
+        linear-gradient(180deg, rgba(5,35,23,.6), rgba(3,17,13,.9));
 }
 
-.scene-title {
+/* SUN */
+
+.sun {
+    position: absolute;
+    width: 105px;
+    height: 105px;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, #fffbd0 3%, #ffe866 30%, #ffb700 65%, #ff7700 100%);
+    box-shadow:
+        0 0 30px #ffd43b,
+        0 0 70px rgba(255,196,20,.65);
+    animation: sunPulse 2.2s infinite;
+}
+
+.sun::before,
+.sun::after {
+    content: "";
+    position: absolute;
+    inset: -25px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,213,65,.22);
+    animation: rotate 8s linear infinite;
+}
+
+.sun::after {
+    inset: -40px;
+    border-color: rgba(255,213,65,.12);
+    animation-direction: reverse;
+}
+
+/* LIGHT BEAM */
+
+.beam {
+    position: absolute;
+    top: 125px;
+    left: 50%;
+    width: 5px;
+    height: 270px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+        180deg,
+        rgba(255,239,92,.9),
+        rgba(255,230,70,.25),
+        transparent
+    );
+    box-shadow: 0 0 20px #ffe45c;
+    opacity: .8;
+}
+
+/* PLANT */
+
+.plant {
+    position: absolute;
+    left: 50%;
+    bottom: 35px;
+    transform: translateX(-50%);
+    width: 430px;
+    height: 390px;
+}
+
+.stem {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 18px;
+    height: 310px;
+    transform: translateX(-50%);
+    border-radius: 20px;
+    background: linear-gradient(90deg, #075d32, #46ee91, #08713b);
+    box-shadow: 0 0 20px rgba(52,255,135,.35);
+}
+
+.leaf {
+    position: absolute;
+    width: 175px;
+    height: 88px;
+    background: linear-gradient(135deg, #0c9f51, #5dff9e);
+    border-radius: 100% 0 100% 0;
+    box-shadow: 0 0 25px rgba(45,255,135,.2);
+    cursor: pointer;
+    transition: .25s;
+}
+
+.leaf:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+.leaf::after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 140px;
+    background: rgba(220,255,230,.6);
+    top: 50%;
+    left: 15px;
+    transform: rotate(-25deg);
+}
+
+.leaf1 {
+    left: 28px;
+    top: 70px;
+    transform: rotate(-20deg);
+}
+
+.leaf2 {
+    right: 28px;
+    top: 115px;
+    transform: scaleX(-1) rotate(-20deg);
+}
+
+.leaf3 {
+    left: 45px;
+    top: 190px;
+    transform: rotate(-15deg);
+}
+
+.leaf4 {
+    right: 42px;
+    top: 235px;
+    transform: scaleX(-1) rotate(-15deg);
+}
+
+/* CHLOROPLAST */
+
+.chloroplast {
+    position: absolute;
+    left: 50%;
+    top: 115px;
+    transform: translateX(-50%);
+    width: 185px;
+    height: 105px;
+    border-radius: 50%;
+    border: 5px solid #5cff9d;
+    background:
+        radial-gradient(ellipse at center, rgba(30,255,130,.25), rgba(0,60,35,.65));
+    box-shadow:
+        0 0 20px #27ff8c,
+        inset 0 0 25px rgba(40,255,130,.3);
+    z-index: 3;
+}
+
+.grana {
+    position: absolute;
+    width: 42px;
+    height: 15px;
+    border-radius: 50%;
+    border: 3px solid #a6ffc6;
+    box-shadow: 0 0 8px #52ff9a;
+}
+
+.g1 { left: 20px; top: 20px; }
+.g2 { left: 70px; top: 45px; }
+.g3 { right: 20px; top: 20px; }
+.g4 { right: 52px; bottom: 15px; }
+
+/* MOLECULES */
+
+.molecule {
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin: 0 8px 8px;
-}
-
-.scene-title h2 {
-    margin: 0;
-    font-size: 30px;
-    color: var(--brown-dark);
-}
-
-.scene-title span {
-    font-size: 19px;
-    color: #7c8179;
-}
-
-.scene {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    min-height: 480px;
-    border-radius: 18px;
-    overflow: hidden;
-    background: #e8e1d4;
-    border: 2px solid rgba(101, 76, 63, .15);
-}
-
-/* SVG */
-
-.scene svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.object {
+    justify-content: center;
+    font-family: Orbitron;
+    font-size: 10px;
+    font-weight: 800;
     cursor: pointer;
-    transition: filter .2s, opacity .2s, transform .2s;
-    transform-box: fill-box;
-    transform-origin: center;
+    user-select: none;
+    z-index: 8;
+    animation: float 3s ease-in-out infinite;
 }
 
-.object.unlocked:hover {
-    filter: drop-shadow(0 0 9px rgba(197,155,84,.9));
+.co2 {
+    background: radial-gradient(circle, #8f9aaa, #384252);
+    box-shadow: 0 0 18px rgba(140,155,175,.6);
 }
 
-.object.current {
-    filter:
-        drop-shadow(0 0 7px rgba(102,133,111,.8))
-        drop-shadow(0 0 16px rgba(197,155,84,.55));
-    animation: objectPulse 1.5s infinite;
+.h2o {
+    background: radial-gradient(circle, #72efff, #1267a1);
+    box-shadow: 0 0 18px rgba(60,225,255,.65);
 }
 
-.object.completed {
-    opacity: .68;
+.o2 {
+    background: radial-gradient(circle, #fff, #68c9ff);
+    box-shadow: 0 0 20px #59cfff;
 }
 
-.object.locked {
-    cursor: not-allowed;
-    opacity: .55;
+.glucose {
+    background: radial-gradient(circle, #fff19b, #f0a900);
+    box-shadow: 0 0 20px #ffd438;
 }
 
-.object.failed {
-    opacity: .42;
-    filter: grayscale(.35);
+/* RIGHT */
+
+.right {
+    padding-bottom: 15px;
 }
 
-@keyframes objectPulse {
-    50% {
-        transform: scale(1.018);
-    }
-}
-
-.wrong-flash {
-    animation: wrongFlash .55s ease;
-}
-
-@keyframes wrongFlash {
-    0%,100% {
-        filter: none;
-    }
-    20%,60% {
-        filter:
-            drop-shadow(0 0 12px #d84d4d)
-            drop-shadow(0 0 22px #d84d4d);
-    }
-    40%,80% {
-        filter: drop-shadow(0 0 2px #d84d4d);
-    }
-}
-
-/* SVG labels */
-
-.svg-label {
-    font-family: "Amatic SC", cursive;
-    font-weight: 700;
-    fill: #4f413a;
-    pointer-events: none;
-}
-
-.decor {
-    pointer-events: none;
-}
-
-/* ================= NOTEBOOK ================= */
-
-.notebook {
-    width: 330px;
-    flex: 0 0 330px;
-    background:
-        linear-gradient(rgba(255,253,247,.96), rgba(250,247,239,.96));
-    border-radius: 22px;
-    box-shadow: var(--shadow);
-    border: 1px solid rgba(118,85,72,.18);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-.notebook-header {
-    padding: 17px 20px;
-    background: #e3d6c4;
-    border-bottom: 1px solid rgba(118,85,72,.15);
-}
-
-.notebook-header h2 {
-    margin: 0;
-    font-size: 29px;
-    color: var(--brown-dark);
-}
-
-.notebook-header p {
-    margin: 0;
-    font-size: 17px;
-    color: #746c63;
-}
-
-.notes {
-    flex: 1;
-    overflow-y: auto;
-    padding: 13px;
-}
-
-.note {
-    background:
-        linear-gradient(
-            transparent 95%,
-            rgba(117,139,118,.14) 96%
-        );
-    border-bottom: 1px dashed #cfc4b4;
-    padding: 12px 9px 15px;
-    animation: noteAppear .45s ease;
-}
-
-.note:last-child {
-    border-bottom: none;
-}
-
-.note-number {
-    display: inline-grid;
-    place-items: center;
-    width: 29px;
-    height: 29px;
-    border-radius: 50%;
-    background: var(--green);
-    color: white;
-    margin-right: 6px;
-    font-size: 18px;
-}
-
-.note p {
-    display: inline;
-    font-size: 20px;
-    line-height: 1.15;
-}
-
-@keyframes noteAppear {
-    from {
-        opacity: 0;
-        transform: translateX(18px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.letter-box {
-    margin: 12px;
-    padding: 13px;
+.formula {
+    margin: 10px;
+    padding: 18px 10px;
     border-radius: 15px;
-    background: #f1e8d9;
-    border: 1px solid #ddcfba;
+    background: rgba(82,255,154,.035);
+    border: 1px solid rgba(82,255,154,.12);
     text-align: center;
 }
 
-.letter-title {
-    font-size: 18px;
-    color: #766c61;
+.formula .line {
+    font-family: Orbitron;
+    font-size: 12px;
+    line-height: 2.2;
 }
 
-.letters {
-    min-height: 42px;
+.formula .arrow {
+    color: var(--yellow);
+    font-size: 22px;
+}
+
+.objective {
+    margin: 12px;
+    padding: 15px;
+    border-radius: 14px;
+    background: rgba(165,108,255,.08);
+    border: 1px solid rgba(165,108,255,.2);
+}
+
+.objective h3 {
+    color: #c59eff;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.objective p {
+    color: #bdc8c4;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.mission {
+    margin: 12px;
+    padding: 15px;
+    border-radius: 14px;
+    background: rgba(255,228,92,.06);
+    border: 1px solid rgba(255,228,92,.18);
+}
+
+.mission h3 {
+    color: var(--yellow);
+    font-size: 12px;
+}
+
+.mission-text {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #dce4df;
+}
+
+/* CONTROLS */
+
+.controls {
+    margin-top: 18px;
     display: flex;
     justify-content: center;
+    gap: 12px;
     flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 5px;
 }
 
-.letter {
-    width: 36px;
-    height: 40px;
-    display: grid;
-    place-items: center;
-    border-radius: 9px;
-    background: #fffdf8;
-    border: 2px solid #c6ad82;
-    color: var(--brown-dark);
-    font-size: 27px;
-    box-shadow: 0 3px 7px rgba(70,50,30,.1);
-}
-
-/* ================= TOAST ================= */
-
-.toast-container {
-    position: fixed;
-    right: 25px;
-    bottom: 25px;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.toast {
-    max-width: 330px;
-    padding: 13px 19px;
-    border-radius: 14px;
+button {
+    font-family: Montserrat;
+    font-weight: 700;
+    cursor: pointer;
     color: white;
-    font-size: 20px;
-    box-shadow: 0 9px 25px rgba(0,0,0,.18);
-    animation: toastIn .35s ease, toastOut .35s ease 2.8s forwards;
+    border: none;
 }
 
-.toast.good {
-    background: #64836d;
+.btn {
+    padding: 13px 20px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #0d7543, #12b866);
+    border: 1px solid rgba(82,255,154,.35);
+    box-shadow: 0 0 15px rgba(50,255,150,.12);
+    transition: .2s;
 }
 
-.toast.bad {
-    background: #b95757;
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(50,255,150,.3);
 }
 
-.toast.info {
-    background: #66849b;
+.btn.secondary {
+    background: rgba(255,255,255,.06);
+    border-color: rgba(255,255,255,.1);
 }
 
-@keyframes toastIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.levels {
+    display: flex;
+    gap: 7px;
+    margin: 10px 12px;
 }
 
-@keyframes toastOut {
-    to {
-        opacity: 0;
-        transform: translateY(15px);
-    }
+.level {
+    flex: 1;
+    padding: 8px 4px;
+    font-size: 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,.05);
 }
 
-/* ================= MODALS ================= */
+.level.active {
+    background: rgba(82,255,154,.15);
+    border: 1px solid var(--green);
+    color: var(--green);
+}
+
+/* EVENT */
+
+.event {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    padding: 11px;
+    border-radius: 12px;
+    text-align: center;
+    background: rgba(3,15,11,.8);
+    border: 1px solid rgba(82,255,154,.15);
+    font-size: 12px;
+    z-index: 10;
+}
+
+/* TIMER */
+
+.timer {
+    margin: 12px;
+    height: 12px;
+    border-radius: 20px;
+    background: #06110d;
+    overflow: hidden;
+}
+
+.timer-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, var(--green), var(--yellow));
+    transition: width 1s linear;
+}
+
+/* MODAL */
 
 .modal {
     position: fixed;
     inset: 0;
-    z-index: 500;
-    background: rgba(48,40,34,.55);
-    backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.modal.hidden {
+    background: rgba(0,5,3,.86);
+    backdrop-filter: blur(12px);
     display: none;
-}
-
-.modal-card {
-    width: min(720px, 100%);
-    max-height: 90vh;
-    overflow-y: auto;
-    background:
-        linear-gradient(
-            145deg,
-            #fffdf8,
-            #f3ecdf
-        );
-    border-radius: 26px;
-    padding: 28px;
-    box-shadow: 0 25px 70px rgba(40,30,20,.3);
-    border: 2px solid rgba(197,155,84,.3);
-    animation: modalIn .35s ease;
-}
-
-@keyframes modalIn {
-    from {
-        opacity: 0;
-        transform: scale(.93) translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-.modal-icon {
-    font-size: 54px;
-    text-align: center;
-}
-
-.modal-card h2 {
-    text-align: center;
-    margin: 5px 0 8px;
-    color: var(--brown-dark);
-    font-size: 39px;
-}
-
-.modal-card p {
-    font-size: 22px;
-    line-height: 1.18;
-    margin: 9px 0;
-}
-
-.case-list {
-    display: grid;
-    gap: 9px;
-    margin: 15px 0;
-}
-
-.suspect {
-    display: flex;
-    gap: 12px;
     align-items: center;
-    padding: 12px;
-    border-radius: 13px;
-    background: #f5eee3;
-    border: 1px solid #dfd0bd;
-}
-
-.suspect-icon {
-    font-size: 32px;
-}
-
-.primary-btn {
-    width: 100%;
-    border: 0;
-    border-radius: 14px;
-    padding: 13px 20px;
-    font-size: 25px;
-    color: white;
-    background: linear-gradient(135deg, #66856f, #4e6d59);
-    box-shadow: 0 7px 16px rgba(71,98,82,.25);
-    transition: .2s;
-}
-
-.primary-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(71,98,82,.32);
-}
-
-.secondary-btn {
-    border: 0;
-    border-radius: 12px;
-    padding: 11px 20px;
-    font-size: 21px;
-    background: #e5dacb;
-    color: var(--brown-dark);
-}
-
-/* ================= TASK MODAL ================= */
-
-.task-card {
-    width: min(800px, 100%);
-}
-
-.task-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    align-items: center;
-}
-
-.task-type {
-    padding: 5px 12px;
-    border-radius: 20px;
-    background: #e7ddd0;
-    color: #71665c;
-    font-size: 17px;
-}
-
-.attempts {
-    font-size: 19px;
-    color: #765b50;
-}
-
-.task-question {
-    text-align: center;
-    font-size: 28px;
-    line-height: 1.15;
-    margin: 14px 0 18px;
-}
-
-.options {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 11px;
-}
-
-.option-btn {
-    border: 2px solid #d8c8b4;
-    background: #fffdf8;
-    border-radius: 13px;
-    padding: 13px;
-    font-size: 21px;
-    color: #4d433c;
-    transition: .2s;
-}
-
-.option-btn:hover {
-    border-color: var(--green);
-    background: #f0f5ee;
-    transform: translateY(-2px);
-}
-
-.answer-input {
-    width: 100%;
-    border: 2px solid #d8c8b4;
-    border-radius: 13px;
-    padding: 12px 15px;
-    font-size: 24px;
-    outline: none;
-    background: #fffdf8;
-    text-align: center;
-}
-
-.answer-input:focus {
-    border-color: var(--green);
-    box-shadow: 0 0 0 4px rgba(102,133,111,.12);
-}
-
-.submit-answer {
-    margin-top: 13px;
-}
-
-.match-area {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-}
-
-.match-column {
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-}
-
-.match-column h3 {
-    text-align: center;
-    font-size: 21px;
-    margin: 0 0 2px;
-    color: #6d6056;
-}
-
-.match-item {
-    border: 2px solid #d8c8b4;
-    background: #fffdf8;
-    border-radius: 12px;
-    padding: 11px;
-    font-size: 20px;
-    min-height: 49px;
-    transition: .2s;
-}
-
-.match-item:hover {
-    border-color: var(--green);
-}
-
-.match-item.selected {
-    border-color: var(--gold);
-    background: #f6eedf;
-    box-shadow: 0 0 0 3px rgba(197,155,84,.12);
-}
-
-.match-item.matched {
-    background: #e5eee5;
-    border-color: #78957d;
-    opacity: .7;
-    pointer-events: none;
-}
-
-.match-status {
-    text-align: center;
-    font-size: 18px;
-    color: #73695f;
-    margin-top: 12px;
-}
-
-/* ================= FINAL ================= */
-
-.final-card {
-    width: min(620px, 100%);
-    text-align: center;
-}
-
-.collected-word {
-    display: flex;
     justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin: 15px 0;
+    z-index: 100;
 }
 
-.collected-letter {
-    width: 45px;
-    height: 52px;
-    display: grid;
-    place-items: center;
-    border-radius: 10px;
-    background: #f1e5d1;
-    border: 2px solid #c49e63;
-    font-size: 33px;
+.modal.show {
+    display: flex;
 }
 
-.final-input {
-    text-transform: uppercase;
-    letter-spacing: 5px;
-    font-size: 29px;
+.modal-box {
+    width: min(520px, 90%);
+    padding: 40px;
+    text-align: center;
+    border-radius: 25px;
+    border: 1px solid rgba(82,255,154,.4);
+    background: linear-gradient(145deg, #071d14, #04100c);
+    box-shadow: 0 0 60px rgba(50,255,150,.15);
 }
 
-.hint {
-    min-height: 28px;
-    color: #7b6657;
-    font-size: 20px;
-    margin: 9px 0;
+.modal-box h2 {
+    font-family: Orbitron;
+    color: var(--green);
+    font-size: 28px;
+    margin-bottom: 15px;
 }
 
-.win {
-    position: relative;
-    overflow: hidden;
+.final-score {
+    font-family: Orbitron;
+    font-size: 45px;
+    color: var(--yellow);
+    margin: 15px;
+    text-shadow: 0 0 20px #ffd93d;
 }
 
-.win h2 {
-    color: #55725d;
+.badge {
+    margin: 15px auto;
+    padding: 10px 20px;
+    display: inline-block;
+    border-radius: 30px;
+    color: #06100d;
+    background: var(--green);
+    font-weight: 800;
 }
 
-.fireworks {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
+/* PARTICLES */
 
 .particle {
-    position: absolute;
-    font-size: 24px;
-    animation: particleFly 1.8s ease-out forwards;
+    position: fixed;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--green);
+    pointer-events: none;
+    animation: particle 800ms forwards;
+    z-index: 200;
 }
 
-@keyframes particleFly {
-    0% {
-        transform: translate(0,0) scale(.5) rotate(0);
-        opacity: 1;
-    }
-    100% {
-        transform:
-            translate(
-                var(--x),
-                var(--y)
-            )
-            scale(1.3)
-            rotate(240deg);
+/* ANIMATIONS */
+
+@keyframes sunPulse {
+    0%,100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.08); }
+}
+
+@keyframes rotate {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes particle {
+    to {
+        transform: translate(var(--x), var(--y)) scale(0);
         opacity: 0;
     }
 }
 
-/* ================= RESPONSIVE ================= */
+@keyframes flash {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(2); }
+    100% { filter: brightness(1); }
+}
 
-@media (max-width: 1050px) {
-    .main {
-        flex-direction: column;
+.flash {
+    animation: flash .35s;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px) {
+    .game {
+        grid-template-columns: 200px 1fr;
     }
 
-    .notebook {
-        width: 100%;
-        flex-basis: auto;
-        max-height: 360px;
+    .right {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
     }
 
-    .notes {
-        max-height: 220px;
-    }
-
-    .scene {
-        min-height: 420px;
+    .right .panel-title {
+        display: none;
     }
 }
 
-@media (max-width: 700px) {
+@media(max-width:750px) {
     header {
         height: auto;
-        padding: 10px 14px;
-        flex-wrap: wrap;
+        padding: 15px;
+        flex-direction: column;
+        gap: 12px;
     }
 
-    .logo h1 {
-        font-size: 26px;
-    }
-
-    .logo small {
-        font-size: 14px;
-    }
-
-    .header-right {
+    .stats {
         width: 100%;
     }
 
-    .progress-box {
+    .stat {
         flex: 1;
         min-width: 0;
     }
 
-    .main {
-        width: 98%;
-        margin-top: 10px;
-    }
-
-    .scene {
-        min-height: 350px;
-        aspect-ratio: 4 / 3;
-    }
-
-    .scene-title h2 {
-        font-size: 25px;
-    }
-
-    .options {
+    .game {
         grid-template-columns: 1fr;
     }
 
-    .match-area {
-        grid-template-columns: 1fr;
+    .left {
+        order: 2;
     }
 
-    .modal-card {
-        padding: 20px;
+    .center {
+        order: 1;
+        min-height: 600px;
     }
 
-    .modal-card h2 {
-        font-size: 32px;
+    .right {
+        order: 3;
+        display: block;
     }
 
-    .modal-card p,
-    .task-question {
-        font-size: 21px;
-    }
-}
-
-@media (max-width: 450px) {
-    .reset-btn {
-        font-size: 17px;
-        padding: 8px 11px;
-    }
-
-    .scene {
-        min-height: 300px;
-    }
-
-    .notebook {
-        max-height: 330px;
+    .plant {
+        transform: translateX(-50%) scale(.8);
+        transform-origin: bottom center;
     }
 }
 </style>
@@ -877,2046 +751,873 @@ header {
 
 <body>
 
-<div class="app">
-
 <header>
     <div class="logo">
-        <div class="logo-icon">🔎</div>
-        <div>
-            <h1>Детективное расследование</h1>
-            <small>Тайна интерфазы</small>
+        <div class="logo-icon"></div>
+        <div class="logo-text">
+            PHOTO<span>SYNTHESIS</span>
         </div>
     </div>
 
-    <div class="header-right">
-        <div class="progress-box">
-            <div class="progress-label">
-                <span>Расследование</span>
-                <span id="progressText">0 / 8</span>
-            </div>
-            <div class="progress">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
+    <div class="stats">
+        <div class="stat">
+            <small>Очки</small>
+            <strong id="score">0000</strong>
         </div>
 
-        <button class="reset-btn" id="resetBtn">
-            ↻ Сбросить
-        </button>
+        <div class="stat">
+            <small>Комбо</small>
+            <strong id="combo">x1</strong>
+        </div>
+
+        <div class="stat">
+            <small>Время</small>
+            <strong id="time">90</strong>
+        </div>
     </div>
 </header>
 
-<main class="main">
+<main>
 
-<section class="scene-card">
-
-    <div class="scene-title">
-        <h2>Библиотека клеточных тайн</h2>
-        <span id="currentHint">Ищите первый объект</span>
+    <div class="title">
+        <h1>ЭНЕРГИЯ СОЛНЦА</h1>
+        <p>Запусти фотосинтез и преврати свет в химическую энергию</p>
     </div>
 
-    <div class="scene">
-
-        <svg viewBox="0 0 1200 675"
-             xmlns="http://www.w3.org/2000/svg">
-
-            <!-- BACKGROUND -->
-
-            <rect width="1200" height="675" fill="#e7dfd1"/>
-
-            <!-- WALL PANELS -->
-            <rect x="0" y="0" width="1200" height="440" fill="#eee7db"/>
-            <rect x="0" y="440" width="1200" height="235" fill="#b99b7c"/>
-
-            <path d="M0 470 H1200 M0 510 H1200 M0 550 H1200 M0 590 H1200 M0 630 H1200"
-                  stroke="#a9896d"
-                  stroke-width="5"
-                  opacity=".45"/>
-
-            <!-- WINDOW -->
-
-            <g class="decor">
-                <rect x="70" y="70" width="260" height="230" rx="8"
-                      fill="#b9ced0"
-                      stroke="#74594d"
-                      stroke-width="12"/>
-
-                <rect x="193" y="70" width="12" height="230"
-                      fill="#74594d"/>
-
-                <rect x="70" y="177" width="260" height="12"
-                      fill="#74594d"/>
-
-                <circle cx="270" cy="115" r="35"
-                        fill="#eee2c3"
-                        opacity=".8"/>
-
-                <path d="M70 280 Q130 225 190 280 T330 280 V300 H70Z"
-                      fill="#77937d"
-                      opacity=".6"/>
-            </g>
-
-            <!-- BOOKCASE -->
-
-            <g class="decor">
-                <rect x="400" y="65" width="325" height="370"
-                      rx="8"
-                      fill="#765849"/>
-
-                <rect x="418" y="85" width="289" height="330"
-                      fill="#5b4439"/>
-
-                <path d="M418 165 H707 M418 245 H707 M418 325 H707"
-                      stroke="#a07a61"
-                      stroke-width="9"/>
-
-                <!-- books -->
-                <g>
-                    <rect x="435" y="98" width="22" height="60" fill="#66856f"/>
-                    <rect x="462" y="104" width="26" height="54" fill="#c49a67"/>
-                    <rect x="492" y="91" width="23" height="67" fill="#9b6657"/>
-                    <rect x="520" y="101" width="30" height="57" fill="#758aa0"/>
-                    <rect x="555" y="95" width="18" height="63" fill="#b18a59"/>
-                    <rect x="578" y="108" width="29" height="50" fill="#66856f"/>
-                    <rect x="613" y="92" width="20" height="66" fill="#9b6657"/>
-                    <rect x="639" y="102" width="28" height="56" fill="#758aa0"/>
-                    <rect x="675" y="94" width="19" height="64" fill="#c49a67"/>
-                </g>
-
-                <g>
-                    <rect x="435" y="177" width="30" height="60" fill="#758aa0"/>
-                    <rect x="470" y="182" width="19" height="55" fill="#c49a67"/>
-                    <rect x="495" y="174" width="26" height="63" fill="#66856f"/>
-                    <rect x="528" y="185" width="23" height="52" fill="#9b6657"/>
-                    <rect x="558" y="176" width="31" height="61" fill="#c49a67"/>
-                    <rect x="596" y="184" width="18" height="53" fill="#758aa0"/>
-                    <rect x="622" y="172" width="27" height="65" fill="#66856f"/>
-                    <rect x="657" y="182" width="22" height="55" fill="#9b6657"/>
-                </g>
-
-                <g>
-                    <rect x="435" y="257" width="23" height="60" fill="#c49a67"/>
-                    <rect x="464" y="264" width="31" height="53" fill="#9b6657"/>
-                    <rect x="502" y="252" width="19" height="65" fill="#66856f"/>
-                    <rect x="528" y="261" width="29" height="56" fill="#758aa0"/>
-                    <rect x="564" y="255" width="23" height="62" fill="#c49a67"/>
-                    <rect x="593" y="264" width="30" height="53" fill="#66856f"/>
-                    <rect x="630" y="250" width="18" height="67" fill="#9b6657"/>
-                    <rect x="655" y="260" width="29" height="57" fill="#758aa0"/>
-                </g>
-
-                <g>
-                    <rect x="435" y="338" width="30" height="63" fill="#66856f"/>
-                    <rect x="472" y="347" width="22" height="54" fill="#9b6657"/>
-                    <rect x="501" y="336" width="28" height="65" fill="#c49a67"/>
-                    <rect x="536" y="346" width="20" height="55" fill="#758aa0"/>
-                    <rect x="564" y="335" width="29" height="66" fill="#66856f"/>
-                    <rect x="601" y="344" width="23" height="57" fill="#c49a67"/>
-                    <rect x="630" y="338" width="31" height="63" fill="#9b6657"/>
-                    <rect x="668" y="349" width="21" height="52" fill="#758aa0"/>
-                </g>
-            </g>
-
-            <!-- DECORATIVE LAMP -->
-
-            <g class="decor">
-                <line x1="1000" y1="0" x2="1000" y2="115"
-                      stroke="#544039" stroke-width="8"/>
-                <path d="M945 115 Q1000 75 1055 115 L1030 165 H970Z"
-                      fill="#c5a36d"
-                      stroke="#765849"
-                      stroke-width="7"/>
-                <circle cx="1000" cy="137" r="18"
-                        fill="#f6d993"
-                        opacity=".9"/>
-            </g>
-
-            <!-- ================= OBJECT 1 DESK ================= -->
-
-            <g class="object locked"
-               data-id="desk"
-               tabindex="0">
-
-                <!-- desk -->
-                <rect x="85" y="390" width="330" height="36"
-                      rx="7"
-                      fill="#765849"
-                      stroke="#563f35"
-                      stroke-width="6"/>
-
-                <path d="M110 425 L130 625 M390 425 L365 625"
-                      stroke="#65483b"
-                      stroke-width="24"
-                      stroke-linecap="round"/>
-
-                <!-- drawer -->
-                <rect x="215" y="430" width="100" height="62"
-                      rx="6"
-                      fill="#8b6855"
-                      stroke="#65483b"
-                      stroke-width="5"/>
-
-                <circle cx="265" cy="460" r="8" fill="#d4b779"/>
-
-                <!-- notebook -->
-                <rect x="145" y="350" width="125" height="75"
-                      rx="5"
-                      transform="rotate(-5 145 350)"
-                      fill="#fffaf0"
-                      stroke="#80695c"
-                      stroke-width="4"/>
-
-                <line x1="165" y1="372" x2="250" y2="365"
-                      stroke="#b6aa99" stroke-width="3"/>
-                <line x1="165" y1="389" x2="252" y2="382"
-                      stroke="#b6aa99" stroke-width="3"/>
-
-                <!-- ink bottle + note -->
-                <path d="M320 350
-                         Q315 340 322 330
-                         L350 330
-                         Q357 340 352 350
-                         L348 383
-                         Q337 392 326 383Z"
-                      fill="#35434a"
-                      stroke="#263238"
-                      stroke-width="4"/>
-
-                <rect x="315" y="322" width="43" height="13"
-                      rx="5" fill="#4b3a32"/>
-
-                <rect x="356" y="353" width="45" height="37"
-                      rx="3"
-                      fill="#fff6dc"
-                      stroke="#856d59"
-                      stroke-width="3"/>
-
-                <text x="378" y="377"
-                      text-anchor="middle"
-                      font-size="18"
-                      class="svg-label">?</text>
-
-                <text x="250" y="520"
-                      text-anchor="middle"
-                      font-size="23"
-                      class="svg-label">СТОЛ</text>
-            </g>
-
-            <!-- ================= OBJECT 2 MICROSCOPE ================= -->
-
-            <g class="object locked"
-               data-id="microscope"
-               tabindex="0">
-
-                <ellipse cx="865" cy="505" rx="130" ry="25"
-                         fill="#6b5245"
-                         opacity=".35"/>
-
-                <path d="M820 490
-                         Q825 450 850 420
-                         L890 420
-                         L905 490Z"
-                      fill="#71818a"
-                      stroke="#4d5a61"
-                      stroke-width="6"/>
-
-                <path d="M850 420
-                         L825 350
-                         L850 338
-                         L885 418Z"
-                      fill="#7d8d93"
-                      stroke="#4d5a61"
-                      stroke-width="6"/>
-
-                <path d="M817 346
-                         L790 315
-                         Q786 305 797 299
-                         L820 302
-                         L846 336Z"
-                      fill="#66777e"
-                      stroke="#4d5a61"
-                      stroke-width="6"/>
-
-                <circle cx="818" cy="304" r="15"
-                        fill="#44545b"/>
-
-                <rect x="775" y="462" width="180" height="25"
-                      rx="8"
-                      fill="#53646b"/>
-
-                <rect x="810" y="440" width="120" height="22"
-                      rx="5"
-                      fill="#aeb9b7"/>
-
-                <circle cx="870" cy="451" r="22"
-                        fill="#d9edf0"
-                        stroke="#59696e"
-                        stroke-width="4"/>
-
-                <circle cx="870" cy="451" r="9"
-                        fill="#b7d6da"/>
-
-                <text x="870" y="545"
-                      text-anchor="middle"
-                      font-size="23"
-                      class="svg-label">МИКРОСКОП</text>
-            </g>
-
-            <!-- ================= OBJECT 3 DNA BOOK ================= -->
-
-            <g class="object locked"
-               data-id="dnaBook"
-               tabindex="0">
-
-                <path d="M770 120
-                         Q850 100 920 125
-                         L920 240
-                         Q850 218 770 240Z"
-                      fill="#f9f2df"
-                      stroke="#765849"
-                      stroke-width="6"/>
-
-                <path d="M770 120
-                         Q850 145 920 125"
-                      fill="none"
-                      stroke="#765849"
-                      stroke-width="5"/>
-
-                <path d="M770 240
-                         Q850 218 920 240"
-                      fill="none"
-                      stroke="#765849"
-                      stroke-width="5"/>
-
-                <!-- DNA -->
-                <path d="M815 145
-                         C860 165 860 195 815 215
-                         M875 145
-                         C830 165 830 195 875 215"
-                      fill="none"
-                      stroke="#66856f"
-                      stroke-width="7"/>
-
-                <path d="M825 151 L865 151
-                         M837 165 L853 165
-                         M840 181 L850 181
-                         M835 198 L855 198
-                         M825 211 L865 211"
-                      stroke="#c59b54"
-                      stroke-width="5"/>
-
-                <text x="845" y="275"
-                      text-anchor="middle"
-                      font-size="23"
-                      class="svg-label">КНИГА ДНК</text>
-            </g>
-
-            <!-- ================= OBJECT 4 CLOCK ================= -->
-
-            <g class="object locked"
-               data-id="clock"
-               tabindex="0">
-
-                <circle cx="1030" cy="285" r="75"
-                        fill="#fff9ed"
-                        stroke="#765849"
-                        stroke-width="10"/>
-
-                <circle cx="1030" cy="285" r="62"
-                        fill="#f8f0df"
-                        stroke="#c5a36d"
-                        stroke-width="4"/>
-
-                <g stroke="#765849" stroke-width="4">
-                    <line x1="1030" y1="232" x2="1030" y2="245"/>
-                    <line x1="1030" y1="325" x2="1030" y2="338"/>
-                    <line x1="977" y1="285" x2="990" y2="285"/>
-                    <line x1="1070" y1="285" x2="1083" y2="285"/>
-                </g>
-
-                <line x1="1030" y1="285" x2="1030" y2="247"
-                      stroke="#4d4038" stroke-width="6"
-                      stroke-linecap="round"/>
-
-                <line x1="1030" y1="285" x2="1060" y2="302"
-                      stroke="#4d4038" stroke-width="6"
-                      stroke-linecap="round"/>
-
-                <circle cx="1030" cy="285" r="8"
-                        fill="#c59b54"/>
-
-                <text x="1030" y="385"
-                      text-anchor="middle"
-                      font-size="23"
-                      class="svg-label">ЧАСЫ</text>
-            </g>
-
-            <!-- ================= OBJECT 5 PLANT ================= -->
-
-            <g class="object locked"
-               data-id="plant"
-               tabindex="0">
-
-                <path d="M500 565
-                         Q555 520 610 565
-                         L600 625
-                         L510 625Z"
-                      fill="#c98664"
-                      stroke="#765849"
-                      stroke-width="6"/>
-
-                <path d="M555 565 C550 500 550 445 560 395"
-                      stroke="#55735e"
-                      stroke-width="12"
-                      fill="none"/>
-
-                <path d="M557 480
-                         Q510 450 475 470
-                         Q500 515 555 495Z"
-                      fill="#66856f"
-                      stroke="#4e6d59"
-                      stroke-width="5"/>
-
-                <path d="M555 445
-                         Q600 405 635 425
-                         Q620 465 558 462Z"
-                      fill="#75937c"
-                      stroke="#4e6d59"
-                      stroke-width="5"/>
-
-                <path d="M558 415
-                         Q520 380 500 397
-                         Q510 435 555 435Z"
-                      fill="#5f8069"
-                      stroke="#4e6d59"
-                      stroke-width="5"/>
-
-                <text x="555" y="660"
-                      text-anchor="middle"
-                      font-size="23"
-                      class="svg-label">РАСТЕНИЕ</text>
-            </g>
-
-            <!-- ================= OBJECT 6 LAMP ================= -->
-
-            <g class="object locked"
-               data-id="lamp"
-               tabindex="0">
-
-                <path d="M120 120
-                         L220 120
-                         L245 195
-                         L95 195Z"
-                      fill="#c7a66d"
-                      stroke="#765849"
-                      stroke-width="7"/>
-
-                <path d="M170 195 L170 340"
-                      stroke="#765849"
-                      stroke-width="12"/>
-
-                <path d="M120 340 Q170 320 220 340"
-                      fill="none"
-                      stroke="#765849"
-                      stroke-width="12"
-                      stroke-linecap="round"/>
-
-                <circle cx="170" cy="215" r="22"
-                        fill="#f6d78d"
-                        opacity=".85"/>
-
-                <text x="170" y="380"
-                      text-anchor="middle"
-                      font-size="23"
-                      class="svg-label">ЛАМПА</text>
-            </g>
-
-            <!-- ================= OBJECT 7 DNA HELIX ================= -->
-
-            <g class="object locked"
-               data-id="dnaHelix"
-               tabindex="0">
-
-                <path d="M355 485
-                         C410 515 410 565 355 595
-                         M435 485
-                         C380 515 380 565 435 595"
-                      fill="none"
-                      stroke="#668ba5"
-                      stroke-width="10"/>
-
-                <path d="M365 493 L425 493
-                         M382 515 L408 515
-                         M390 540 L400 540
-                         M382 565 L408 565
-                         M365 587 L425 587"
-                      stroke="#c59b54"
-                      stroke-width="8"
-                      stroke-linecap="round"/>
-
-                <circle cx="395" cy="540" r="70"
-                        fill="none"
-                        stroke="#668ba5"
-                        stroke-width="3"
-                        opacity=".25"/>
-
-                <text x="395" y="635"
-                      text-anchor="middle"
-                      font-size="23"
-                      class="svg-label">ДНК</text>
-            </g>
-
-            <!-- ================= OBJECT 8 CHROMATIN ================= -->
-
-            <g class="object locked"
-               data-id="chromatin"
-               tabindex="0">
-
-                <circle cx="1010" cy="500" r="23"
-                        fill="#a77662"
-                        stroke="#674a3f"
-                        stroke-width="5"/>
-
-                <circle cx="1055" cy="530" r="23"
-                        fill="#66856f"
-                        stroke="#4e6d59"
-                        stroke-width="5"/>
-
-                <circle cx="1000" cy="565" r="23"
-                        fill="#668ba5"
-                        stroke="#4f6878"
-                        stroke-width="5"/>
-
-                <circle cx="1050" cy="595" r="23"
-                        fill="#c59b54"
-                        stroke="#876b3c"
-                        stroke-width="5"/>
-
-                <path d="M1025 505 L1040 522
-                         M1045 548 L1015 552
-                         M1018 580 L1035 588"
-                      stroke="#765849"
-                      stroke-width="8"
-                      fill="none"/>
-
-                <text x="1030" y="645"
-                      text-anchor="middle"
-                      font-size="23"
-                      class="svg-label">ХРОМАТИН</text>
-            </g>
-
-            <!-- FOREGROUND DECOR -->
-            <g class="decor">
-                <ellipse cx="600" cy="650" rx="540" ry="32"
-                         fill="#765849"
-                         opacity=".12"/>
-            </g>
-
-        </svg>
+    <div class="game">
+
+        <!-- LEFT -->
+        <section class="panel left">
+
+            <div class="panel-title">⚡ РЕСУРСЫ КЛЕТКИ</div>
+
+            <div class="resource">
+                <div class="resource-top">
+                    <div class="resource-name">
+                        <span class="resource-icon">☀️</span>СВЕТ
+                    </div>
+                    <div class="resource-value" id="lightVal">70%</div>
+                </div>
+                <div class="bar">
+                    <div class="bar-fill" id="lightBar"></div>
+                </div>
+            </div>
+
+            <div class="resource">
+                <div class="resource-top">
+                    <div class="resource-name">
+                        <span class="resource-icon">💧</span>ВОДА
+                    </div>
+                    <div class="resource-value" id="waterVal">50%</div>
+                </div>
+                <div class="bar">
+                    <div class="bar-fill" id="waterBar"></div>
+                </div>
+            </div>
+
+            <div class="resource">
+                <div class="resource-top">
+                    <div class="resource-name">
+                        <span class="resource-icon">💨</span>CO₂
+                    </div>
+                    <div class="resource-value" id="co2Val">50%</div>
+                </div>
+                <div class="bar">
+                    <div class="bar-fill" id="co2Bar"></div>
+                </div>
+            </div>
+
+            <div class="resource">
+                <div class="resource-top">
+                    <div class="resource-name">
+                        <span class="resource-icon">🍬</span>ГЛЮКОЗА
+                    </div>
+                    <div class="resource-value" id="glucoseVal">0</div>
+                </div>
+                <div class="bar">
+                    <div class="bar-fill" id="glucoseBar" style="width:0%"></div>
+                </div>
+            </div>
+
+            <div class="resource">
+                <div class="resource-top">
+                    <div class="resource-name">
+                        <span class="resource-icon">🌬️</span>O₂
+                    </div>
+                    <div class="resource-value" id="oxygenVal">0</div>
+                </div>
+                <div class="bar">
+                    <div class="bar-fill" id="oxygenBar" style="width:0%"></div>
+                </div>
+            </div>
+
+            <div class="panel-title">СЛОЖНОСТЬ</div>
+
+            <div class="levels">
+                <button class="level active" data-level="1">СТАРТ</button>
+                <button class="level" data-level="2">БИО</button>
+                <button class="level" data-level="3">ЭКСПЕРТ</button>
+            </div>
+
+            <div class="timer">
+                <div class="timer-fill" id="timerBar"></div>
+            </div>
+
+        </section>
+
+        <!-- CENTER -->
+        <section class="panel center" id="field">
+
+            <div class="event" id="event">
+                Соберите ресурсы, необходимые растению для фотосинтеза!
+            </div>
+
+            <div class="sun"></div>
+            <div class="beam"></div>
+
+            <!-- CHLOROPLAST -->
+            <div class="chloroplast" id="chloroplast">
+                <div class="grana g1"></div>
+                <div class="grana g2"></div>
+                <div class="grana g3"></div>
+                <div class="grana g4"></div>
+            </div>
+
+            <!-- PLANT -->
+            <div class="plant">
+                <div class="stem"></div>
+
+                <div class="leaf leaf1"></div>
+                <div class="leaf leaf2"></div>
+                <div class="leaf leaf3"></div>
+                <div class="leaf leaf4"></div>
+            </div>
+
+        </section>
+
+        <!-- RIGHT -->
+        <section class="panel right">
+
+            <div class="panel-title">🧬 ФОРМУЛА ПРОЦЕССА</div>
+
+            <div class="formula">
+                <div class="line">☀️ СВЕТ</div>
+                <div class="line">💧 H₂O + CO₂</div>
+                <div class="arrow">↓</div>
+                <div class="line">🍃 ХЛОРОПЛАСТ</div>
+                <div class="arrow">↓</div>
+                <div class="line">🍬 ГЛЮКОЗА + 🌬️ O₂</div>
+            </div>
+
+            <div class="objective">
+                <h3>🎯 ЦЕЛЬ</h3>
+                <p>
+                    Соберите достаточное количество воды и CO₂,
+                    направьте их в хлоропласт и запустите синтез
+                    глюкозы.
+                </p>
+            </div>
+
+            <div class="mission">
+                <h3>⚡ МИССИЯ</h3>
+                <div class="mission-text" id="mission">
+                    Соберите 3 молекулы CO₂ и 3 молекулы H₂O.
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn" id="startBtn">▶ НАЧАТЬ</button>
+                <button class="btn secondary" id="helpBtn">?</button>
+            </div>
+
+        </section>
 
     </div>
-</section>
-
-<!-- NOTEBOOK -->
-
-<aside class="notebook">
-
-    <div class="notebook-header">
-        <h2>📖 Блокнот детектива</h2>
-        <p>Все найденные записки</p>
-    </div>
-
-    <div class="notes" id="notes"></div>
-
-    <div class="letter-box">
-        <div class="letter-title">
-            Собранные буквы
-        </div>
-        <div class="letters" id="letters"></div>
-    </div>
-
-</aside>
-
 </main>
 
-</div>
+<!-- MODAL -->
 
-<!-- START MODAL -->
+<div class="modal" id="modal">
 
-<div class="modal" id="startModal">
+    <div class="modal-box">
 
-    <div class="modal-card">
+        <h2 id="modalTitle">ФОТОСИНТЕЗ ЗАПУЩЕН!</h2>
 
-        <div class="modal-icon">🔎📚</div>
-
-        <h2>Дело № 008: Тайна интерфазы</h2>
-
-        <p>
-            В библиотеке клеточных исследований исчезла важнейшая
-            информация о <b>интерфазе</b>.
+        <p id="modalText">
+            Растение успешно преобразовало энергию света.
         </p>
 
-        <p>
-            Восстановить ход событий сможет только настоящий
-            детектив. Исследуй комнату, решай биологические задачи
-            и собирай буквы секретного слова.
-        </p>
+        <div class="final-score" id="finalScore">0</div>
 
-        <p>
-            В расследовании могут появиться три версии:
-        </p>
-
-        <div class="case-list">
-
-            <div class="suspect">
-                <div class="suspect-icon">🧬</div>
-                <div>
-                    <b>Версия 1.</b><br>
-                    ДНК изменила свою структуру.
-                </div>
-            </div>
-
-            <div class="suspect">
-                <div class="suspect-icon">⏰</div>
-                <div>
-                    <b>Версия 2.</b><br>
-                    Клеточный цикл сбился со времени.
-                </div>
-            </div>
-
-            <div class="suspect">
-                <div class="suspect-icon">🌱</div>
-                <div>
-                    <b>Версия 3.</b><br>
-                    Клетка готовится к следующему делению.
-                </div>
-            </div>
-
+        <div class="badge" id="badge">
+            🌱 МОЛОДОЙ БИОЛОГ
         </div>
 
-        <p>
-            ⚠️ Объекты открываются только в правильной
-            последовательности. На каждое задание даётся
-            <b>2 попытки</b>.
-        </p>
+        <br>
 
-        <button class="primary-btn" id="startBtn">
-            🔍 Начать расследование
+        <button class="btn" onclick="restartGame()">
+            🔄 ИГРАТЬ СНОВА
         </button>
 
     </div>
+
 </div>
-
-<!-- TASK MODAL -->
-
-<div class="modal hidden" id="taskModal">
-
-    <div class="modal-card task-card">
-
-        <div class="task-top">
-            <span class="task-type" id="taskType">
-                Задание
-            </span>
-
-            <span class="attempts" id="attempts">
-                Попытки: 2
-            </span>
-        </div>
-
-        <h2 id="taskTitle">
-            Исследование объекта
-        </h2>
-
-        <div id="taskContent"></div>
-
-    </div>
-</div>
-
-<!-- FINAL MODAL -->
-
-<div class="modal hidden" id="finalModal">
-
-    <div class="modal-card final-card" id="finalCard">
-
-        <div class="fireworks" id="fireworks"></div>
-
-        <div class="modal-icon">🕵️‍♀️✨</div>
-
-        <h2>Финальная разгадка</h2>
-
-        <p>
-            Все восемь объектов исследованы.
-            Буквы собраны!
-        </p>
-
-        <p>
-            Из них нужно составить название того,
-            кто ухаживает за садом.
-        </p>
-
-        <div class="collected-word" id="finalLetters"></div>
-
-        <input
-            class="answer-input final-input"
-            id="finalInput"
-            type="text"
-            autocomplete="off"
-            placeholder="ВВЕДИТЕ СЛОВО"
-        >
-
-        <div class="hint" id="finalHint"></div>
-
-        <button class="primary-btn"
-                id="finalSubmit">
-            🔐 Проверить разгадку
-        </button>
-
-        <button class="secondary-btn"
-                id="finalRestart"
-                style="display:none; width:100%; margin-top:10px;">
-            🔄 Новое расследование
-        </button>
-
-    </div>
-</div>
-
-<div class="toast-container" id="toastContainer"></div>
 
 <script>
-"use strict";
 
-/* =========================================================
-   ДАННЫЕ ИГРЫ
-   ========================================================= */
+/* =========================
+   GAME VARIABLES
+========================= */
 
-const FINAL_WORD = "САДОВНИК";
+let score = 0;
+let combo = 1;
+let time = 90;
+let playing = false;
 
-/*
-    8 объектов → 8 букв.
-    shuffle() перемешивает буквы при каждом запуске.
-*/
+let light = 70;
+let water = 50;
+let co2 = 50;
 
-const OBJECT_NAMES = {
-    desk: "Стол с чернильницей",
-    microscope: "Микроскоп",
-    dnaBook: "Книга о ДНК",
-    clock: "Часы",
-    plant: "Растение",
-    lamp: "Лампа",
-    dnaHelix: "Модель ДНК",
-    chromatin: "Хроматин"
-};
+let glucose = 0;
+let oxygen = 0;
 
-/*
-    Цепочка строго последовательная.
-*/
-const CHAIN = [
-    "desk",
-    "microscope",
-    "dnaBook",
-    "clock",
-    "plant",
-    "lamp",
-    "dnaHelix",
-    "chromatin"
-];
+let collectedWater = 0;
+let collectedCO2 = 0;
 
-/*
-    Буквы выдаются в случайном порядке.
-*/
-let shuffledLetters = shuffle(FINAL_WORD.split(""));
+let level = 1;
+let timer;
 
-/*
-    Задания.
-*/
-const TASKS = {
+/* =========================
+   AUDIO
+========================= */
 
-    desk: {
-        type: "choice",
-        title: "Записка в чернильнице",
-        question:
-            "Интерфаза — это период клеточного цикла между двумя делениями. Какие процессы происходят в интерфазе?",
-        options: [
-            "Только деление ядра",
-            "Рост клетки, обмен веществ и подготовка к делению",
-            "Только разрушение ДНК",
-            "Только образование клеточной стенки"
-        ],
-        answer: 1,
-        note:
-            "Запись на полях: «Клетка растёт и готовится к работе. Следующий след ищи там, где можно увидеть её внутренний мир».",
-        next: "microscope"
-    },
+let audioCtx;
 
-    microscope: {
-        type: "input",
-        title: "След под микроскопом",
-        question:
-            "Назови первую фазу интерфазы, во время которой клетка растёт и активно синтезирует вещества.",
-        answer: ["G1", "G1-ФАЗА", "G1 ФАЗА", "G1 ФАЗА ИНТЕРФАЗЫ"],
-        note:
-            "На линзе обнаружена запись: «G1 пройдена. Теперь нужно найти информацию о том, что происходит с наследственным материалом».",
-        next: "dnaBook"
-    },
+function sound(freq = 500, duration = .08) {
 
-    dnaBook: {
-        type: "match",
-        title: "Загадка старой книги",
-        question:
-            "Соедини этап интерфазы с главным событием.",
-        left: [
-            { id: "g1", text: "G1" },
-            { id: "s", text: "S" },
-            { id: "g2", text: "G2" },
-            { id: "checkpoint", text: "Контрольные точки" }
-        ],
-        right: [
-            { id: "s", text: "Удвоение ДНК" },
-            { id: "g2", text: "Подготовка к делению" },
-            { id: "checkpoint", text: "Проверка состояния клетки" },
-            { id: "g1", text: "Рост и синтез веществ" }
-        ],
-        note:
-            "В книге найдено: «Интерфаза идёт по плану. Но кто следит за временем клеточного цикла? Посмотри на часы».",
-        next: "clock"
-    },
+    try {
 
-    clock: {
-        type: "choice",
-        title: "Клеточные часы",
-        question:
-            "В какой части интерфазы происходит репликация ДНК?",
-        options: [
-            "G1",
-            "S",
-            "G2",
-            "Митоз"
-        ],
-        answer: 1,
-        note:
-            "Часы остановились на букве S. На обратной стороне: «ДНК удвоилась. Клетке теперь нужны материалы для дальнейшей подготовки. Ищи живой объект».",
-        next: "plant"
-    },
+        if (!audioCtx)
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-    plant: {
-        type: "input",
-        title: "Записка среди листьев",
-        question:
-            "Сколько молекул ДНК будет содержать клетка после полного удвоения одной исходной молекулы ДНК?",
-        answer: ["2", "ДВЕ", "ДВЕ МОЛЕКУЛЫ"],
-        note:
-            "Под листом найдено: «ДНК удвоена. Но подготовка ещё не завершена. Найди источник света — он покажет следующий этап».",
-        next: "lamp"
-    },
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
 
-    lamp: {
-        type: "match",
-        title: "Свет контрольной точки",
-        question:
-            "Соедини структуру или процесс с правильной характеристикой.",
-        left: [
-            { id: "dna", text: "ДНК" },
-            { id: "protein", text: "Белки" },
-            { id: "g2", text: "G2" },
-            { id: "chromatin", text: "Хроматин" }
-        ],
-        right: [
-            { id: "chromatin", text: "ДНК с белками" },
-            { id: "g2", text: "Подготовка к митозу" },
-            { id: "protein", text: "Важны для роста и работы клетки" },
-            { id: "dna", text: "Хранит наследственную информацию" }
-        ],
-        note:
-            "Свет высветил надпись: «Белки и ДНК подготовлены. Последний биологический след скрыт в модели наследственного материала».",
-        next: "dnaHelix"
-    },
+        osc.frequency.value = freq;
+        osc.type = "sine";
 
-    dnaHelix: {
-        type: "choice",
-        title: "Двойная спираль",
-        question:
-            "Почему репликация ДНК необходима перед делением клетки?",
-        options: [
-            "Чтобы уменьшить количество ДНК",
-            "Чтобы каждая дочерняя клетка получила наследственный материал",
-            "Чтобы клетка перестала расти",
-            "Чтобы разрушить хромосомы"
-        ],
-        answer: 1,
-        note:
-            "Последняя запись: «Наследственный материал подготовлен. Теперь проверь, в каком состоянии находится ДНК в интерфазе».",
-        next: "chromatin"
-    },
-
-    chromatin: {
-        type: "input",
-        title: "Последняя улика",
-        question:
-            "Как называется комплекс ДНК и белков, из которого образуются хромосомы?",
-        answer: ["ХРОМАТИН", "ХРОМАТИНА"],
-        note:
-            "Дело раскрыто! Все этапы интерфазы восстановлены. Последняя дверь открыта — собери финальное слово из найденных букв.",
-        next: null
-    }
-};
-
-
-/* =========================================================
-   СОСТОЯНИЕ
-   ========================================================= */
-
-let currentIndex = 0;
-let attempts = 2;
-let completed = [];
-let collectedLetters = [];
-let selectedMatchLeft = null;
-let matchPairs = {};
-let finalAttempts = 0;
-let gameStarted = false;
-
-
-/* =========================================================
-   DOM
-   ========================================================= */
-
-const startModal = document.getElementById("startModal");
-const taskModal = document.getElementById("taskModal");
-const finalModal = document.getElementById("finalModal");
-
-const startBtn = document.getElementById("startBtn");
-const resetBtn = document.getElementById("resetBtn");
-
-const taskType = document.getElementById("taskType");
-const taskTitle = document.getElementById("taskTitle");
-const taskContent = document.getElementById("taskContent");
-const attemptsEl = document.getElementById("attempts");
-
-const notesEl = document.getElementById("notes");
-const lettersEl = document.getElementById("letters");
-
-const progressText = document.getElementById("progressText");
-const progressFill = document.getElementById("progressFill");
-const currentHint = document.getElementById("currentHint");
-
-const toastContainer = document.getElementById("toastContainer");
-
-const finalLetters = document.getElementById("finalLetters");
-const finalInput = document.getElementById("finalInput");
-const finalHint = document.getElementById("finalHint");
-const finalSubmit = document.getElementById("finalSubmit");
-const finalRestart = document.getElementById("finalRestart");
-const fireworks = document.getElementById("fireworks");
-
-
-/* =========================================================
-   SHUFFLE
-   ========================================================= */
-
-function shuffle(array) {
-    const arr = [...array];
-
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-
-    return arr;
-}
-
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-function showToast(message, type = "info") {
-
-    const toast = document.createElement("div");
-
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-
-    toastContainer.appendChild(toast);
-
-    setTimeout(() => {
-        toast.remove();
-    }, 3300);
-}
-
-
-/* =========================================================
-   НОРМАЛИЗАЦИЯ ОТВЕТА
-   ========================================================= */
-
-function normalizeAnswer(value) {
-
-    return String(value)
-        .trim()
-        .toUpperCase()
-        .replaceAll("Ё", "Е")
-        .replace(/\s+/g, " ");
-}
-
-
-/* =========================================================
-   SVG OBJECTS
-   ========================================================= */
-
-function getObject(id) {
-    return document.querySelector(
-        `.object[data-id="${id}"]`
-    );
-}
-
-function updateObjects() {
-
-    document.querySelectorAll(".object").forEach(obj => {
-
-        const id = obj.dataset.id;
-
-        obj.classList.remove(
-            "locked",
-            "unlocked",
-            "current",
-            "completed",
-            "failed"
+        gain.gain.setValueAtTime(.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            audioCtx.currentTime + duration
         );
 
-        const objectIndex = CHAIN.indexOf(id);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
 
-        if (completed.includes(id)) {
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
 
-            obj.classList.add("completed");
+    } catch(e) {}
+}
 
-        } else if (objectIndex === currentIndex) {
+/* =========================
+   DOM
+========================= */
 
-            obj.classList.add("unlocked");
-            obj.classList.add("current");
+const field = document.getElementById("field");
+
+const scoreEl = document.getElementById("score");
+const comboEl = document.getElementById("combo");
+const timeEl = document.getElementById("time");
+
+const lightBar = document.getElementById("lightBar");
+const waterBar = document.getElementById("waterBar");
+const co2Bar = document.getElementById("co2Bar");
+const glucoseBar = document.getElementById("glucoseBar");
+const oxygenBar = document.getElementById("oxygenBar");
+
+const lightVal = document.getElementById("lightVal");
+const waterVal = document.getElementById("waterVal");
+const co2Val = document.getElementById("co2Val");
+const glucoseVal = document.getElementById("glucoseVal");
+const oxygenVal = document.getElementById("oxygenVal");
+
+const eventEl = document.getElementById("event");
+const missionEl = document.getElementById("mission");
+
+/* =========================
+   UPDATE UI
+========================= */
+
+function updateUI() {
+
+    scoreEl.textContent = String(score).padStart(4,"0");
+    comboEl.textContent = "x" + combo;
+    timeEl.textContent = time;
+
+    lightBar.style.width = light + "%";
+    waterBar.style.width = water + "%";
+    co2Bar.style.width = co2 + "%";
+
+    glucoseBar.style.width = Math.min(glucose * 5,100) + "%";
+    oxygenBar.style.width = Math.min(oxygen * 5,100) + "%";
+
+    lightVal.textContent = Math.round(light) + "%";
+    waterVal.textContent = Math.round(water) + "%";
+    co2Val.textContent = Math.round(co2) + "%";
+
+    glucoseVal.textContent = glucose;
+    oxygenVal.textContent = oxygen;
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+function particles(x,y,count=12) {
+
+    for(let i=0;i<count;i++) {
+
+        const p = document.createElement("div");
+
+        p.className = "particle";
+
+        p.style.left = x + "px";
+        p.style.top = y + "px";
+
+        p.style.setProperty(
+            "--x",
+            (Math.random()*160-80) + "px"
+        );
+
+        p.style.setProperty(
+            "--y",
+            (Math.random()*160-80) + "px"
+        );
+
+        document.body.appendChild(p);
+
+        setTimeout(()=>p.remove(),800);
+    }
+}
+
+/* =========================
+   SPAWN MOLECULE
+========================= */
+
+function spawnMolecule(type) {
+
+    if(!playing) return;
+
+    const mol = document.createElement("div");
+
+    mol.className = "molecule " + type;
+
+    if(type === "co2") {
+        mol.textContent = "CO₂";
+    }
+
+    if(type === "h2o") {
+        mol.textContent = "H₂O";
+    }
+
+    const rect = field.getBoundingClientRect();
+
+    const x = 30 + Math.random() * (rect.width - 80);
+    const y = 180 + Math.random() * (rect.height - 250);
+
+    mol.style.left = x + "px";
+    mol.style.top = y + "px";
+
+    mol.addEventListener("click",()=>{
+
+        if(!playing) return;
+
+        const mRect = mol.getBoundingClientRect();
+
+        particles(
+            mRect.left + 23,
+            mRect.top + 23
+        );
+
+        if(type === "co2") {
+
+            collectedCO2++;
+
+            co2 = Math.min(100, co2 + 8);
+
+            score += 100 * combo;
+
+            eventEl.textContent =
+                "CO₂ получен! Доставьте его в хлоропласт.";
 
         } else {
 
-            obj.classList.add("locked");
+            collectedWater++;
+
+            water = Math.min(100, water + 8);
+
+            score += 100 * combo;
+
+            eventEl.textContent =
+                "H₂O получена! Вода готова для фотосинтеза.";
         }
+
+        combo++;
+
+        if(combo > 8)
+            combo = 8;
+
+        sound(type === "co2" ? 600 : 750);
+
+        mol.remove();
+
+        updateUI();
+
+        checkMission();
     });
 
-    if (currentIndex < CHAIN.length) {
+    field.appendChild(mol);
 
-        const id = CHAIN[currentIndex];
+    setTimeout(()=>{
+        if(mol.parentNode)
+            mol.remove();
+    },6500);
+}
 
-        currentHint.textContent =
-            `Ищите: ${OBJECT_NAMES[id]}`;
+/* =========================
+   PHOTOSYNTHESIS
+========================= */
+
+function photosynthesis() {
+
+    if(!playing) return;
+
+    const required =
+        level === 1 ? 3 :
+        level === 2 ? 5 : 7;
+
+    if(collectedCO2 < required || collectedWater < required) {
+
+        combo = 1;
+
+        eventEl.textContent =
+            "⚠️ Не хватает исходных веществ для фотосинтеза!";
+
+        sound(180,.2);
+
+        return;
+    }
+
+    if(light < 20) {
+
+        eventEl.textContent =
+            "☁️ Слишком мало света! Усильте поток солнечной энергии.";
+
+        sound(150,.2);
+
+        return;
+    }
+
+    collectedCO2 -= required;
+    collectedWater -= required;
+
+    co2 = Math.max(0, co2 - required*3);
+    water = Math.max(0, water - required*3);
+
+    glucose += 1;
+    oxygen += 1;
+
+    score += 500 * combo;
+
+    light = Math.max(10, light - 8);
+
+    eventEl.textContent =
+        "🌟 ФОТОСИНТЕЗ ПРОИЗОШЁЛ! Получены глюкоза и O₂.";
+
+    chloroplastEffect();
+
+    sound(900,.12);
+
+    setTimeout(()=>sound(1200,.15),100);
+
+    updateUI();
+
+    checkMission();
+}
+
+/* =========================
+   CHLOROPLAST EFFECT
+========================= */
+
+function chloroplastEffect() {
+
+    const chloroplast =
+        document.getElementById("chloroplast");
+
+    chloroplast.classList.remove("flash");
+
+    void chloroplast.offsetWidth;
+
+    chloroplast.classList.add("flash");
+
+    const r = chloroplast.getBoundingClientRect();
+
+    particles(
+        r.left + r.width/2,
+        r.top + r.height/2,
+        25
+    );
+}
+
+/* =========================
+   MISSION
+========================= */
+
+function checkMission() {
+
+    const target =
+        level === 1 ? 3 :
+        level === 2 ? 5 : 7;
+
+    if(
+        collectedCO2 >= target &&
+        collectedWater >= target
+    ) {
+
+        missionEl.innerHTML =
+            "✅ Ресурсы собраны!<br>Нажмите на хлоропласт, чтобы запустить реакцию.";
 
     } else {
 
-        currentHint.textContent =
-            "Все улики собраны!";
+        missionEl.innerHTML =
+            `Соберите <b>${target}</b> CO₂ и <b>${target}</b> H₂O.<br>
+             Затем запустите фотосинтез.`;
     }
 }
 
+/* =========================
+   CHLOROPLAST CLICK
+========================= */
 
-/* =========================================================
-   CLICK EVENTS
-   ========================================================= */
+document.getElementById("chloroplast")
+.addEventListener("click", photosynthesis);
 
-document.querySelectorAll(".object").forEach(object => {
+/* =========================
+   GAME TIMER
+========================= */
 
-    object.addEventListener("click", function(e) {
+function startTimer() {
+
+    clearInterval(timer);
+
+    timer = setInterval(()=>{
+
+        if(!playing) return;
+
+        time--;
+
+        timeEl.textContent = time;
+
+        document.getElementById("timerBar").style.width =
+            (time / 90 * 100) + "%";
 
         /*
-            КРИТИЧЕСКИ ВАЖНО:
-            предотвращаем всплытие события.
+          Постепенно уменьшаем доступность ресурсов.
         */
-        e.stopPropagation();
 
-        const id = this.dataset.id;
+        light -= .25;
 
-        if (!gameStarted) {
-            showToast(
-                "Сначала начните расследование.",
-                "info"
-            );
-            return;
+        if(light < 0)
+            light = 0;
+
+        if(time % 8 === 0) {
+
+            eventEl.textContent =
+                "☀️ Солнечная энергия постепенно расходуется.";
         }
 
-        if (id !== CHAIN[currentIndex]) {
+        if(time <= 0) {
 
-            showToast(
-                "Этот объект пока недоступен. Следуйте последней записке.",
-                "info"
-            );
-
-            return;
+            endGame(false);
         }
 
-        openTask(id);
-    });
+        updateUI();
 
-    object.addEventListener("keydown", function(e) {
+    },1000);
+}
 
-        if (
-            e.key === "Enter" ||
-            e.key === " "
-        ) {
+/* =========================
+   SPAWN LOOP
+========================= */
 
-            e.preventDefault();
+let spawnInterval;
 
-            const id = this.dataset.id;
+function startSpawning() {
 
-            if (
-                gameStarted &&
-                id === CHAIN[currentIndex]
-            ) {
+    clearInterval(spawnInterval);
 
-                openTask(id);
-            }
-        }
+    spawnInterval = setInterval(()=>{
+
+        if(!playing) return;
+
+        const chance = Math.random();
+
+        if(chance < .5)
+            spawnMolecule("co2");
+        else
+            spawnMolecule("h2o");
+
+    },1100);
+}
+
+/* =========================
+   START
+========================= */
+
+document.getElementById("startBtn")
+.addEventListener("click", startGame);
+
+function startGame() {
+
+    score = 0;
+    combo = 1;
+    time = level === 1 ? 90 : level === 2 ? 75 : 60;
+
+    light = 70;
+    water = 50;
+    co2 = 50;
+
+    glucose = 0;
+    oxygen = 0;
+
+    collectedWater = 0;
+    collectedCO2 = 0;
+
+    playing = true;
+
+    document.getElementById("modal")
+        .classList.remove("show");
+
+    document.querySelectorAll(".molecule")
+        .forEach(m=>m.remove());
+
+    eventEl.textContent =
+        "Игра началась! Соберите H₂O и CO₂.";
+
+    missionEl.innerHTML =
+        `Соберите <b>${level === 1 ? 3 : level === 2 ? 5 : 7}</b> CO₂
+         и такое же количество H₂O.`;
+
+    startTimer();
+    startSpawning();
+
+    updateUI();
+
+    sound(500,.1);
+    setTimeout(()=>sound(700,.1),120);
+}
+
+/* =========================
+   END GAME
+========================= */
+
+function endGame(win) {
+
+    playing = false;
+
+    clearInterval(timer);
+    clearInterval(spawnInterval);
+
+    document.querySelectorAll(".molecule")
+        .forEach(m=>m.remove());
+
+    const modal =
+        document.getElementById("modal");
+
+    const title =
+        document.getElementById("modalTitle");
+
+    const text =
+        document.getElementById("modalText");
+
+    const final =
+        document.getElementById("finalScore");
+
+    const badge =
+        document.getElementById("badge");
+
+    final.textContent = score;
+
+    if(win) {
+
+        title.textContent =
+            "🌱 ФОТОСИНТЕЗ УСПЕШЕН!";
+
+        text.textContent =
+            "Вы запустили процесс образования органического вещества и кислорода.";
+
+        if(score >= 5000)
+            badge.textContent = "🏆 МАСТЕР ФОТОСИНТЕЗА";
+        else if(score >= 2500)
+            badge.textContent = "🧬 БИОХИМИК";
+        else
+            badge.textContent = "🌱 МОЛОДОЙ БИОЛОГ";
+
+    } else {
+
+        title.textContent =
+            "☀️ ВРЕМЯ ЗАКОНЧИЛОСЬ";
+
+        text.textContent =
+            "Попробуйте ещё раз и эффективнее распределяйте ресурсы растения.";
+
+        badge.textContent =
+            "🔬 ИССЛЕДОВАНИЕ ПРОДОЛЖАЕТСЯ";
+    }
+
+    modal.classList.add("show");
+}
+
+/* =========================
+   WIN CONDITION
+========================= */
+
+function checkWin() {
+
+    const target =
+        level === 1 ? 4 :
+        level === 2 ? 6 : 9;
+
+    if(glucose >= target) {
+
+        endGame(true);
+    }
+}
+
+/* Override checkMission for win */
+const originalPhotosynthesis = photosynthesis;
+
+/* =========================
+   HELP
+========================= */
+
+document.getElementById("helpBtn")
+.addEventListener("click",()=>{
+
+    eventEl.textContent =
+        "💡 Нажимайте на CO₂ и H₂O, затем нажимайте на хлоропласт. Каждый успешный цикл даёт глюкозу и O₂.";
+
+    sound(800,.1);
+});
+
+/* =========================
+   LEVELS
+========================= */
+
+document.querySelectorAll(".level")
+.forEach(btn=>{
+
+    btn.addEventListener("click",()=>{
+
+        document.querySelectorAll(".level")
+            .forEach(b=>b.classList.remove("active"));
+
+        btn.classList.add("active");
+
+        level = Number(btn.dataset.level);
+
+        if(level === 1)
+            eventEl.textContent =
+                "🌱 Уровень «СТАРТ»: познакомьтесь с механизмом фотосинтеза.";
+
+        if(level === 2)
+            eventEl.textContent =
+                "🧬 Уровень «БИО»: ресурсов меньше, цель выше.";
+
+        if(level === 3)
+            eventEl.textContent =
+                "🔥 Уровень «ЭКСПЕРТ»: действуйте быстро!";
+
+        sound(650,.1);
     });
 });
 
+/* =========================
+   RESTART
+========================= */
 
-/* =========================================================
-   START GAME
-   ========================================================= */
+function restartGame() {
 
-startBtn.addEventListener("click", () => {
+    document.getElementById("modal")
+        .classList.remove("show");
 
-    gameStarted = true;
-
-    startModal.classList.add("hidden");
-
-    addNote(
-        "Начало расследования: «Первый след находится на столе, рядом с чернильницей»."
-    );
-
-    updateObjects();
-    updateProgress();
-});
-
-
-/* =========================================================
-   OPEN TASK
-   ========================================================= */
-
-function openTask(id) {
-
-    const task = TASKS[id];
-
-    attempts = 2;
-
-    selectedMatchLeft = null;
-    matchPairs = {};
-
-    taskType.textContent =
-        getTaskTypeName(task.type);
-
-    taskTitle.textContent =
-        task.title;
-
-    attemptsEl.textContent =
-        "Попытки: 2";
-
-    taskContent.innerHTML = "";
-
-    if (task.type === "choice") {
-        renderChoiceTask(task);
-    }
-
-    if (task.type === "input") {
-        renderInputTask(task);
-    }
-
-    if (task.type === "match") {
-        renderMatchTask(task);
-    }
-
-    taskModal.classList.remove("hidden");
+    startGame();
 }
 
+/* =========================
+   EXTRA RESOURCE EFFECTS
+========================= */
 
-function getTaskTypeName(type) {
+setInterval(()=>{
 
-    if (type === "choice") {
-        return "🔘 Выбор ответа";
-    }
-
-    if (type === "input") {
-        return "⌨️ Ввод ответа";
-    }
-
-    if (type === "match") {
-        return "🔗 Сопоставление";
-    }
-
-    return "Задание";
-}
-
-
-/* =========================================================
-   CHOICE
-   ========================================================= */
-
-function renderChoiceTask(task) {
-
-    const question =
-        document.createElement("div");
-
-    question.className = "task-question";
-    question.textContent = task.question;
-
-    taskContent.appendChild(question);
-
-    const options =
-        document.createElement("div");
-
-    options.className = "options";
-
-    task.options.forEach((option, index) => {
-
-        const button =
-            document.createElement("button");
-
-        button.className = "option-btn";
-
-        button.textContent =
-            `${String.fromCharCode(65 + index)}. ${option}`;
-
-        button.addEventListener("click", () => {
-
-            checkChoice(index, task);
-        });
-
-        options.appendChild(button);
-    });
-
-    taskContent.appendChild(options);
-}
-
-
-function checkChoice(index, task) {
-
-    if (index === task.answer) {
-
-        successCurrentTask();
-
-    } else {
-
-        wrongAnswer();
-    }
-}
-
-
-/* =========================================================
-   INPUT
-   ========================================================= */
-
-function renderInputTask(task) {
-
-    const question =
-        document.createElement("div");
-
-    question.className = "task-question";
-    question.textContent = task.question;
-
-    taskContent.appendChild(question);
-
-    const input =
-        document.createElement("input");
-
-    input.className = "answer-input";
-    input.type = "text";
-    input.id = "taskAnswer";
-    input.autocomplete = "off";
-
-    const button =
-        document.createElement("button");
-
-    button.className =
-        "primary-btn submit-answer";
-
-    button.textContent =
-        "Проверить";
-
-    button.addEventListener("click", () => {
-
-        checkInput(task);
-    });
-
-    input.addEventListener("keydown", e => {
-
-        if (e.key === "Enter") {
-            checkInput(task);
-        }
-    });
-
-    taskContent.appendChild(input);
-    taskContent.appendChild(button);
-
-    setTimeout(() => input.focus(), 100);
-}
-
-
-function checkInput(task) {
-
-    const input =
-        document.getElementById("taskAnswer");
-
-    if (!input) return;
-
-    const value =
-        normalizeAnswer(input.value);
-
-    const correct =
-        task.answer.some(
-            answer =>
-                normalizeAnswer(answer) === value
-        );
-
-    if (correct) {
-
-        successCurrentTask();
-
-    } else {
-
-        wrongAnswer();
-
-        input.select();
-    }
-}
-
-
-/* =========================================================
-   MATCH
-   ========================================================= */
-
-function renderMatchTask(task) {
-
-    const question =
-        document.createElement("div");
-
-    question.className = "task-question";
-    question.textContent = task.question;
-
-    taskContent.appendChild(question);
-
-    const area =
-        document.createElement("div");
-
-    area.className = "match-area";
-
-    const left =
-        document.createElement("div");
-
-    left.className = "match-column";
-
-    const leftTitle =
-        document.createElement("h3");
-
-    leftTitle.textContent =
-        "Левая колонка";
-
-    left.appendChild(leftTitle);
-
-    task.left.forEach(item => {
-
-        const el =
-            document.createElement("button");
-
-        el.className = "match-item";
-        el.dataset.matchId = item.id;
-        el.dataset.side = "left";
-
-        el.textContent = item.text;
-
-        el.addEventListener("click", () => {
-
-            selectLeft(el);
-        });
-
-        left.appendChild(el);
-    });
-
-    const right =
-        document.createElement("div");
-
-    right.className = "match-column";
-
-    const rightTitle =
-        document.createElement("h3");
-
-    rightTitle.textContent =
-        "Правая колонка";
-
-    right.appendChild(rightTitle);
-
-    const shuffledRight =
-        shuffle(task.right);
-
-    shuffledRight.forEach(item => {
-
-        const el =
-            document.createElement("button");
-
-        el.className = "match-item";
-        el.dataset.matchId = item.id;
-        el.dataset.side = "right";
-
-        el.textContent = item.text;
-
-        el.addEventListener("click", () => {
-
-            selectRight(el);
-        });
-
-        right.appendChild(el);
-    });
-
-    area.appendChild(left);
-    area.appendChild(right);
-
-    taskContent.appendChild(area);
-
-    const status =
-        document.createElement("div");
-
-    status.className = "match-status";
-    status.id = "matchStatus";
-
-    status.textContent =
-        "Выберите элемент слева, затем его пару справа.";
-
-    taskContent.appendChild(status);
-}
-
-
-function selectLeft(element) {
-
-    if (element.classList.contains("matched")) {
-        return;
-    }
-
-    document
-        .querySelectorAll(
-            '.match-item[data-side="left"]'
-        )
-        .forEach(el => {
-            el.classList.remove("selected");
-        });
-
-    selectedMatchLeft =
-        element.dataset.matchId;
-
-    element.classList.add("selected");
-
-    const status =
-        document.getElementById("matchStatus");
-
-    if (status) {
-
-        status.textContent =
-            "Теперь выберите соответствующий элемент справа.";
-    }
-}
-
-
-function selectRight(element) {
-
-    if (
-        element.classList.contains("matched") ||
-        !selectedMatchLeft
-    ) {
-
-        return;
-    }
-
-    const rightId =
-        element.dataset.matchId;
-
-    if (rightId === selectedMatchLeft) {
-
-        element.classList.add("matched");
-
-        const left =
-            document.querySelector(
-                `.match-item[data-side="left"][data-match-id="${selectedMatchLeft}"]`
-            );
-
-        if (left) {
-            left.classList.add("matched");
-            left.classList.remove("selected");
-        }
-
-        matchPairs[selectedMatchLeft] =
-            rightId;
-
-        selectedMatchLeft = null;
-
-        const total =
-            Object.keys(matchPairs).length;
-
-        const status =
-            document.getElementById("matchStatus");
-
-        if (total === 4) {
-
-            status.textContent =
-                "Все пары найдены!";
-
-            setTimeout(() => {
-                successCurrentTask();
-            }, 450);
-
-        } else {
-
-            status.textContent =
-                `Найдено пар: ${total} из 4`;
-        }
-
-    } else {
-
-        wrongAnswer();
-
-        selectedMatchLeft = null;
-
-        document
-            .querySelectorAll(".match-item")
-            .forEach(el => {
-                el.classList.remove("selected");
-            });
-    }
-}
-
-
-/* =========================================================
-   WRONG ANSWER
-   ========================================================= */
-
-function wrongAnswer() {
-
-    attempts--;
-
-    const currentId =
-        CHAIN[currentIndex];
-
-    const object =
-        getObject(currentId);
-
-    if (object) {
-
-        object.classList.remove("wrong-flash");
-
-        void object.offsetWidth;
-
-        object.classList.add("wrong-flash");
-    }
-
-    if (attempts > 0) {
-
-        attemptsEl.textContent =
-            `Попытки: ${attempts}`;
-
-        showToast(
-            `Неверно, осталось попыток: ${attempts}`,
-            "bad"
-        );
-
-    } else {
-
-        attemptsEl.textContent =
-            "Попытки закончились";
-
-        showToast(
-            "Попытки закончились. Расследование продолжается!",
-            "bad"
-        );
-
-        setTimeout(() => {
-
-            failCurrentTask();
-
-        }, 850);
-    }
-}
-
-
-/* =========================================================
-   SUCCESS
-   ========================================================= */
-
-function successCurrentTask() {
-
-    const id =
-        CHAIN[currentIndex];
-
-    const task =
-        TASKS[id];
-
-    taskModal.classList.add("hidden");
-
-    completed.push(id);
+    if(!playing) return;
 
     /*
-        Выдаём заранее перемешанную букву.
-    */
-    const letter =
-        shuffledLetters[collectedLetters.length];
-
-    collectedLetters.push(letter);
-
-    addLetter(letter);
-
-    addNote(task.note);
-
-    showToast(
-        `Улика раскрыта! Вы получили букву: ${letter}`,
-        "good"
-    );
-
-    currentIndex++;
-
-    updateProgress();
-
-    updateObjects();
-
-    if (currentIndex >= CHAIN.length) {
-
-        setTimeout(() => {
-
-            openFinal();
-
-        }, 900);
-
-    } else {
-
-        setTimeout(() => {
-
-            const nextId =
-                CHAIN[currentIndex];
-
-            addNote(
-                `Следующая записка: «Ищите объект — ${OBJECT_NAMES[nextId]}».`
-            );
-
-            updateObjects();
-
-        }, 500);
-    }
-}
-
-
-/* =========================================================
-   FAIL TASK
-   ========================================================= */
-
-function failCurrentTask() {
-
-    const id =
-        CHAIN[currentIndex];
-
-    const task =
-        TASKS[id];
-
-    taskModal.classList.add("hidden");
-
-    completed.push(id);
-
-    const object =
-        getObject(id);
-
-    if (object) {
-        object.classList.add("failed");
-    }
-
-    /*
-        Даже при двух ошибках игра не останавливается.
-        Игрок получает букву и следующую улику.
+      Случайное изменение условий среды.
     */
 
-    const letter =
-        shuffledLetters[collectedLetters.length];
+    const event = Math.random();
 
-    collectedLetters.push(letter);
+    if(event < .15) {
 
-    addLetter(letter);
+        light -= 10;
 
-    addNote(
-        `Объект «${OBJECT_NAMES[id]}» не удалось полностью исследовать. ` +
-        `В архиве всё же обнаружена буква: ${letter}.`
-    );
+        if(light < 10)
+            light = 10;
 
-    currentIndex++;
+        eventEl.textContent =
+            "☁️ Облако закрыло солнечный свет!";
 
-    updateProgress();
-    updateObjects();
+        sound(250,.12);
 
-    if (currentIndex >= CHAIN.length) {
+    } else if(event < .28) {
 
-        setTimeout(openFinal, 900);
+        light += 12;
 
-    } else {
+        if(light > 100)
+            light = 100;
 
-        const nextId =
-            CHAIN[currentIndex];
+        eventEl.textContent =
+            "☀️ Облако ушло — интенсивность света увеличилась!";
 
-        setTimeout(() => {
-
-            addNote(
-                `Новая записка: «Следующий объект — ${OBJECT_NAMES[nextId]}».`
-            );
-
-            updateObjects();
-
-        }, 500);
-    }
-}
-
-
-/* =========================================================
-   NOTES
-   ========================================================= */
-
-function addNote(text) {
-
-    const number =
-        notesEl.children.length + 1;
-
-    const note =
-        document.createElement("div");
-
-    note.className = "note";
-
-    note.innerHTML = `
-        <span class="note-number">${number}</span>
-        <p>${escapeHTML(text)}</p>
-    `;
-
-    notesEl.appendChild(note);
-
-    notesEl.scrollTop =
-        notesEl.scrollHeight;
-}
-
-
-/* =========================================================
-   LETTERS
-   ========================================================= */
-
-function addLetter(letter) {
-
-    const el =
-        document.createElement("div");
-
-    el.className = "letter";
-
-    el.textContent = letter;
-
-    lettersEl.appendChild(el);
-}
-
-
-/* =========================================================
-   PROGRESS
-   ========================================================= */
-
-function updateProgress() {
-
-    const count =
-        completed.length;
-
-    progressText.textContent =
-        `${count} / ${CHAIN.length}`;
-
-    progressFill.style.width =
-        `${(count / CHAIN.length) * 100}%`;
-}
-
-
-/* =========================================================
-   FINAL
-   ========================================================= */
-
-function openFinal() {
-
-    finalAttempts = 0;
-
-    finalHint.textContent = "";
-
-    finalInput.value = "";
-
-    finalInput.disabled = false;
-
-    finalSubmit.style.display =
-        "block";
-
-    finalRestart.style.display =
-        "none";
-
-    finalLetters.innerHTML = "";
-
-    collectedLetters.forEach(letter => {
-
-        const el =
-            document.createElement("div");
-
-        el.className =
-            "collected-letter";
-
-        el.textContent =
-            letter;
-
-        finalLetters.appendChild(el);
-    });
-
-    finalModal.classList.remove("hidden");
-
-    setTimeout(() => {
-        finalInput.focus();
-    }, 200);
-}
-
-
-finalSubmit.addEventListener("click", checkFinal);
-
-
-finalInput.addEventListener("keydown", e => {
-
-    if (e.key === "Enter") {
-        checkFinal();
-    }
-});
-
-
-function checkFinal() {
-
-    if (finalInput.disabled) {
-        return;
+        sound(700,.08);
     }
 
-    const answer =
-        normalizeAnswer(finalInput.value)
-        .replace(/\s/g, "");
+    updateUI();
 
-    if (answer === FINAL_WORD) {
+},7000);
 
-        winGame();
+/* =========================
+   PERIODIC WIN CHECK
+========================= */
 
-        return;
-    }
+setInterval(()=>{
 
-    finalAttempts++;
+    if(playing)
+        checkWin();
 
-    if (finalAttempts === 1) {
+},300);
 
-        finalHint.textContent =
-            "💡 Подсказка 1: это человек, который ухаживает за садом.";
+/* =========================
+   INITIAL UI
+========================= */
 
-        showToast(
-            "Не совсем! Вспомните профессию человека, который ухаживает за садом.",
-            "bad"
-        );
+updateUI();
 
-    } else if (finalAttempts === 2) {
-
-        finalHint.textContent =
-            "💡 Подсказка 2: слово начинается на «С» и состоит из 8 букв.";
-
-        showToast(
-            "Последняя подсказка! Начало слова — «САД…»",
-            "info"
-        );
-
-    } else {
-
-        finalHint.innerHTML =
-            `🔓 Правильный ответ: <b>${FINAL_WORD}</b>`;
-
-        showToast(
-            `Ответ: ${FINAL_WORD}`,
-            "good"
-        );
-
-        finalInput.value =
-            FINAL_WORD;
-
-        finalInput.disabled = true;
-
-        finalSubmit.style.display =
-            "none";
-
-        finalRestart.style.display =
-            "block";
-    }
-}
-
-
-/* =========================================================
-   WIN
-   ========================================================= */
-
-function winGame() {
-
-    finalInput.disabled = true;
-    finalSubmit.style.display = "none";
-    finalRestart.style.display = "block";
-
-    finalHint.textContent =
-        "🎉 Идеальное расследование завершено!";
-
-    finalCard.classList.add("win");
-
-    createFireworks();
-
-    showToast(
-        "Дело раскрыто! Вы настоящий клеточный детектив!",
-        "good"
-    );
-}
-
-
-function createFireworks() {
-
-    fireworks.innerHTML = "";
-
-    const symbols = [
-        "✨",
-        "⭐",
-        "🌟",
-        "🎉",
-        "🔬",
-        "🧬"
-    ];
-
-    for (let i = 0; i < 35; i++) {
-
-        const particle =
-            document.createElement("div");
-
-        particle.className =
-            "particle";
-
-        particle.textContent =
-            symbols[
-                Math.floor(
-                    Math.random() * symbols.length
-                )
-            ];
-
-        particle.style.left =
-            (35 + Math.random() * 30) + "%";
-
-        particle.style.top =
-            (35 + Math.random() * 25) + "%";
-
-        particle.style.setProperty(
-            "--x",
-            `${(Math.random() - .5) * 600}px`
-        );
-
-        particle.style.setProperty(
-            "--y",
-            `${(Math.random() - .5) * 500}px`
-        );
-
-        particle.style.animationDelay =
-            `${Math.random() * .35}s`;
-
-        fireworks.appendChild(particle);
-    }
-}
-
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
-resetBtn.addEventListener("click", () => {
-
-    if (
-        !confirm(
-            "Начать расследование заново?"
-        )
-    ) {
-        return;
-    }
-
-    resetGame();
-});
-
-
-finalRestart.addEventListener("click", () => {
-
-    resetGame();
-
-    finalModal.classList.add("hidden");
-});
-
-
-function resetGame() {
-
-    currentIndex = 0;
-    attempts = 2;
-    completed = [];
-    collectedLetters = [];
-
-    /*
-        Новая случайная последовательность букв.
-    */
-    shuffledLetters =
-        shuffle(FINAL_WORD.split(""));
-
-    selectedMatchLeft = null;
-    matchPairs = {};
-
-    finalAttempts = 0;
-    gameStarted = false;
-
-    notesEl.innerHTML = "";
-    lettersEl.innerHTML = "";
-
-    taskModal.classList.add("hidden");
-    finalModal.classList.add("hidden");
-
-    finalCard.classList.remove("win");
-
-    fireworks.innerHTML = "";
-
-    updateProgress();
-    updateObjects();
-
-    currentHint.textContent =
-        "Ищите первый объект";
-
-    startModal.classList.remove("hidden");
-
-    document.querySelectorAll(".object").forEach(obj => {
-
-        obj.classList.remove(
-            "failed",
-            "wrong-flash"
-        );
-    });
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-   ========================================================= */
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}
-
-
-/* =========================================================
-   INITIAL STATE
-   ========================================================= */
-
-updateProgress();
-updateObjects();
+missionEl.innerHTML =
+    "Соберите <b>3</b> CO₂ и <b>3</b> H₂O.<br>Затем запустите фотосинтез.";
 
 </script>
 
