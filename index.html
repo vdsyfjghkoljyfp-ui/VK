@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Биологический сортировщик: Виды метаболизма — BIO-AI SYNAPSE</title>
+<style>
+body{
+margin:0;
+font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background:linear-gradient(135deg,#07121f,#0b2235);
+color:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+#game{
+width:950px;
+background:#0f1f33;
+border:2px solid #2dd4bf;
+border-radius:24px;
+padding:30px;
+box-shadow:0 0 35px rgba(45,212,191,.25);
+}
+h1{
+text-align:center;
+color:#7cf5c8;
+text-shadow:0 0 15px rgba(56,240,176,.4);
+margin-top:0;
+font-size: 26px;
+}
+p.subtitle{
+text-align:center;
+color:#a5f3fc;
+margin-bottom:25px;
+font-size: 15px;
+}
+#score-board{
+display:flex;
+justify-content:space-between;
+background:#10243d;
+padding:12px 20px;
+border-radius:12px;
+margin-bottom:20px;
+font-weight:bold;
+font-size: 16px;
+border:1px solid #1e3a5f;
+}
+#card-container{
+background:#162f4c;
+border:2px dashed #315b8a;
+border-radius:18px;
+padding:35px;
+text-align:center;
+font-size:22px;
+margin-bottom:25px;
+min-height:70px;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#fff;
+box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
+}
+#bins{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+.bin{
+background:#10243d;
+border:2px solid #2dd4bf;
+border-radius:16px;
+padding:25px;
+text-align:center;
+cursor:pointer;
+transition:0.3s;
+box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+.bin:hover{
+background:#1e3a5f;
+transform:translateY(-3px);
+box-shadow: 0 8px 20px rgba(45,212,191,.3);
+}
+.bin h3{
+color:#7cf5c8;
+margin-top:0;
+font-size:20px;
+margin-bottom:10px;
+}
+.bin p{
+font-size:13px;
+color:#94a3b8;
+margin:0;
+line-height: 1.4;
+}
+#message{
+margin-top:20px;
+font-size:18px;
+text-align:center;
+min-height:24px;
+font-weight:bold;
+}
+.success{
+color:#7cf5c8;
+}
+.error{
+color:#fca5a5;
+}
+#restartScreen{
+display:none;
+text-align:center;
+padding:20px;
+}
+button{
+margin-top:20px;
+padding:12px 28px;
+border:none;
+border-radius:12px;
+background:#2dd4bf;
+color:#05222b;
+font-weight:bold;
+cursor:pointer;
+font-size:16px;
+transition: 0.2s;
+box-shadow: 0 0 15px rgba(45,212,191,.4);
+}
+button:hover{
+background:#38f0b0;
+transform: scale(1.05);
+}
+</style>
+</head>
+<body>
+
+<div id="game">
+
+<h1>Интерактивный тренажер: Виды метаболизма</h1>
+<p class="subtitle">Распределите процессы и вещества по двум направлениям обмена веществ (катаболизм и анаболизм).</p>
+
+<div id="score-board">
+<div>Счет: <span id="score">0</span> / 8</div>
+<div>Осталось: <span id="timeLeft">8</span></div>
+</div>
+
+<div id="gameArea">
+<div id="card-container">Загрузка процесса...</div>
+
+<div id="bins">
+<div class="bin" onclick="selectBin('catabolism')">
+<h3>Катаболизм (Энергетический обмен)</h3>
+<p>Распад сложных веществ, выделение энергии и АТФ</p>
+</div>
+<div class="bin" onclick="selectBin('anabolism')">
+<h3>Анаболизм (Plastic / Пластический обмен)</h3>
+<p>Синтез сложных веществ, затраты энергии и АТФ</p>
+</div>
+</div>
+</div>
+
+<div id="restartScreen">
+<h2 style="color:#7cf5c8">Тренировка завершена!</h2>
+<p id="finalMessage" style="font-size: 18px; margin: 15px 0;"></p>
+<button onclick="restartGame()">Пройти еще раз</button>
+</div>
+
+<div id="message"></div>
+
+</div>
+
+<script>
+const items = [
+{ text: "Расщепление глюкозы до пирувата (гликолиз)", type: "catabolism" },
+{ text: "Фотосинтез (синтез глюкозы из CO₂ и H₂O)", type: "anabolism" },
+{ text: "Биосинтез белка на рибосомах из аминокислот", type: "anabolism" },
+{ text: "Окисление жирных кислот в митохондриях", type: "catabolism" },
+{ text: "Репликация ДНК (удвоение молекулы)", type: "anabolism" },
+{ text: "Дыхательный цикл Кребса", type: "catabolism" },
+{ text: "Синтез гликогена из избытка глюкозы в печени", type: "anabolism" },
+{ text: "Гидролиз белков пищи в желудочно-кишечном тракте", type: "catabolism" }
+];
+
+let currentIndex = 0;
+let score = 0;
+let shuffledItems = [];
+
+function startGame() {
+shuffledItems = [...items].sort(() => Math.random() - 0.5);
+currentIndex = 0;
+score = 0;
+document.getElementById('score').textContent = score;
+document.getElementById('timeLeft').textContent = shuffledItems.length;
+document.getElementById('gameArea').style.display = 'block';
+document.getElementById('restartScreen').style.display = 'none';
+document.getElementById('message').textContent = '';
+showCard();
+}
+
+function showCard() {
+if (currentIndex < shuffledItems.length) {
+document.getElementById('card-container').textContent = shuffledItems[currentIndex].text;
+document.getElementById('timeLeft').textContent = shuffledItems.length - currentIndex;
+} else {
+endGame();
+}
+}
+
+function selectBin(selectedType) {
+const currentItem = shuffledItems[currentIndex];
+const message = document.getElementById('message');
+
+if (currentItem.type === selectedType) {
+score++;
+document.getElementById('score').textContent = score;
+message.className = 'success';
+message.textContent = 'Верно! Отличная биологическая интуиция.';
+} else {
+message.className = 'error';
+message.textContent = 'Ошибка! Проверьте, к какому типу обмена относится процесс.';
+}
+
+currentIndex++;
+setTimeout(() => {
+message.textContent = '';
+showCard();
+}, 900);
+}
+
+function endGame() {
+document.getElementById('gameArea').style.display = 'none';
+document.getElementById('restartScreen').style.display = 'block';
+const finalMsg = document.getElementById('finalMessage');
+if (score === items.length) {
+finalMsg.innerHTML = `Потрясающий результат! Вы безупречно разделили катаболизм и анаболизм (<span style="color:#7cf5c8">${score}/${items.length}</span>).`;
+} else {
+finalMsg.innerHTML = `Вы завершили тренировку с результатом <span style="color:#7cf5c8">${score} из ${items.length}</span>. Попробуйте еще раз для закрепления материала!`;
+}
+}
+
+// Запуск игры при загрузке
+startGame();
+</script>
+
+</body>
+</html>
